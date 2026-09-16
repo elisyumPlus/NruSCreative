@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NruS Creativ</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap');
+        
+        /* Tüm tarayıcılarda kaydırma çubuğunu tamamen yok etme */
+        html {
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none; /* Internet Explorer 10+ */
+        }
+        html::-webkit-scrollbar,
+        body::-webkit-scrollbar {
+            display: none; /* Safari and Chrome */
+            width: 0px;
+            background: transparent;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #000000;
+            color: #ffffff;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            overflow-y: scroll; /* Kaydırma işlevselliği korunur ancak çubuk görünmez */
+        }
+
+        /* Splash screen fade out animation */
+        #splash-screen {
+            transition: opacity 0.8s ease-in-out, visibility 0.8s ease-in-out;
+        }
+        .fade-out {
+            opacity: 0;
+            visibility: hidden;
+        }
+    </style>
+</head>
+<body class="bg-black text-white min-h-screen m-0 p-0 selection:bg-white selection:text-black">
+
+    <!-- Açılış Splash Ekranı (2 Saniye Sonra Kaybolacak) -->
+    <div id="splash-screen" class="fixed inset-0 z-50 bg-black flex items-center justify-center">
+        <h1 class="text-3xl sm:text-5xl font-light tracking-[0.3em] uppercase text-white animate-pulse">
+            NruS Creativ
+        </h1>
+    </div>
+
+    <!-- Ana İçerik Konteyneri -->
+    <main id="main-content" class="opacity-0 transition-opacity duration-1000 max-w-6xl mx-auto px-6 py-16">
+        
+        <!-- Üst Başlık & Marka -->
+        <header class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-zinc-800 pb-6 mb-16 gap-4">
+            <h2 class="text-xl font-light tracking-[0.2em] uppercase">NruS Creativ</h2>
+            <div class="flex items-center gap-6">
+                <div class="text-xs text-zinc-400 tracking-wider hidden sm:block">WEB GELİŞTİRME & DİJİTAL ÇÖZÜMLER</div>
+            </div>
+        </header>
+
+        <!-- Bilgilendirme Yazısı -->
+        <section class="mb-20">
+            <div class="max-w-2xl border-l border-white/40 pl-6 py-2">
+                <h3 class="text-2xl font-light mb-4">Dijital Varlığınızı Yeniden Tanımlayın</h3>
+                <p class="text-zinc-400 text-sm leading-relaxed">
+                    NruS Creativ olarak; işletmenize özel, yüksek performanslı, minimalist ve tamamen optimize edilmiş web çözümleri sunuyoruz. Dijital dünyada iz bırakmak ve markanızı en üst seviyeye taşımak için buradayız.
+                </p>
+            </div>
+        </section>
+
+        <!-- Örnek Sitelerin Bulunduğu Katalog ve Filtreleme -->
+        <section class="mb-24">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-8 border-b border-zinc-900 pb-2 gap-4">
+                <h3 class="text-xs uppercase tracking-[0.25em] text-zinc-500">Örnek Projeler / Katalog</h3>
+                
+                <!-- Kategori Filtre Butonları -->
+                <div class="flex flex-wrap gap-2 text-xs font-mono">
+                    <button onclick="filterProjects('all')" class="filter-btn px-3 py-1 border border-white text-white transition-all">TÜMÜ</button>
+                    <button onclick="filterProjects('eticaret')" class="filter-btn px-3 py-1 border border-zinc-800 text-zinc-400 hover:border-white transition-all">E-TİCARET</button>
+                    <button onclick="filterProjects('kurumsal')" class="filter-btn px-3 py-1 border border-zinc-800 text-zinc-400 hover:border-white transition-all">KURUMSAL</button>
+                    <button onclick="filterProjects('saas')" class="filter-btn px-3 py-1 border border-zinc-800 text-zinc-400 hover:border-white transition-all">SAAS</button>
+                </div>
+            </div>
+            
+            <div id="project-grid" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                
+                <!-- Katalog Kart 1 -->
+                <div class="project-card border border-zinc-800 p-6 rounded-none hover:border-white transition-colors group bg-zinc-950/40 flex flex-col justify-between" data-category="eticaret">
+                    <div>
+                        <div class="text-xs text-zinc-500 mb-2 font-mono">01 // E-TİCARET</div>
+                        <h4 class="text-lg font-medium mb-2 group-hover:text-zinc-200">Minimalist Butik</h4>
+                        <p class="text-zinc-400 text-xs mb-6">Sade arayüzlü, hızlı yüklenen ve sorunsuz ödeme altyapısına sahip e-ticaret çözümü.</p>
+                    </div>
+                    <a href="https://example.com/proje-1" target="_blank" class="text-xs text-white underline underline-offset-4 cursor-pointer inline-block">İncele →</a>
+                </div>
+
+                <!-- Katalog Kart 2 -->
+                <div class="project-card border border-zinc-800 p-6 rounded-none hover:border-white transition-colors group bg-zinc-950/40 flex flex-col justify-between" data-category="kurumsal">
+                    <div>
+                        <div class="text-xs text-zinc-500 mb-2 font-mono">02 // KURUMSAL</div>
+                        <h4 class="text-lg font-medium mb-2 group-hover:text-zinc-200">Global Ajans Vb.</h4>
+                        <p class="text-zinc-400 text-xs mb-6">Markanızın prestijini yansıtan, ağır grafiklerden arındırılmış keskin kurumsal site.</p>
+                    </div>
+                    <a href="https://example.com/proje-2" target="_blank" class="text-xs text-white underline underline-offset-4 cursor-pointer inline-block">İncele →</a>
+                </div>
+
+                <!-- Katalog Kart 3 -->
+                <div class="project-card border border-zinc-800 p-6 rounded-none hover:border-white transition-colors group bg-zinc-950/40 flex flex-col justify-between" data-category="saas">
+                    <div>
+                        <div class="text-xs text-zinc-500 mb-2 font-mono">03 // SAAS / LANDING</div>
+                        <h4 class="text-lg font-medium mb-2 group-hover:text-zinc-200">Yazılım Vitrini</h4>
+                        <p class="text-zinc-400 text-xs mb-6">Yüksek dönüşüm oranına sahip, ürün odaklı modern tanıtım ve SaaS sayfaları.</p>
+                    </div>
+                    <a href="https://example.com/proje-3" target="_blank" class="text-xs text-white underline underline-offset-4 cursor-pointer inline-block">İncele →</a>
+                </div>
+
+                <!-- Katalog Kart 4 -->
+                <div class="project-card border border-zinc-800 p-6 rounded-none hover:border-white transition-colors group bg-zinc-950/40 flex flex-col justify-between" data-category="eticaret">
+                    <div>
+                        <div class="text-xs text-zinc-500 mb-2 font-mono">04 // E-TİCARET</div>
+                        <h4 class="text-lg font-medium mb-2 group-hover:text-zinc-200">Lüks Saat & Aksesuar</h4>
+                        <p class="text-zinc-400 text-xs mb-6">Özel vitrin tasarımları ve akıllı sepet yapısıyla yüksek dönüşüm odaklı mağaza.</p>
+                    </div>
+                    <a href="https://example.com/proje-4" target="_blank" class="text-xs text-white underline underline-offset-4 cursor-pointer inline-block">İncele →</a>
+                </div>
+
+                <!-- Katalog Kart 5 -->
+                <div class="project-card border border-zinc-800 p-6 rounded-none hover:border-white transition-colors group bg-zinc-950/40 flex flex-col justify-between" data-category="kurumsal">
+                    <div>
+                        <div class="text-xs text-zinc-500 mb-2 font-mono">05 // KURUMSAL</div>
+                        <h4 class="text-lg font-medium mb-2 group-hover:text-zinc-200">Mimarlık & Tasarım</h4>
+                        <p class="text-zinc-400 text-xs mb-6">Geniş galeri alanları ve sade portfolyo yerleşimi ile mimari stüdyolar için web.</p>
+                    </div>
+                    <a href="https://example.com/proje-5" target="_blank" class="text-xs text-white underline underline-offset-4 cursor-pointer inline-block">İncele →</a>
+                </div>
+
+                <!-- Katalog Kart 6 -->
+                <div class="project-card border border-zinc-800 p-6 rounded-none hover:border-white transition-colors group bg-zinc-950/40 flex flex-col justify-between" data-category="saas">
+                    <div>
+                        <div class="text-xs text-zinc-500 mb-2 font-mono">06 // SAAS / LANDING</div>
+                        <h4 class="text-lg font-medium mb-2 group-hover:text-zinc-200">AI Yazılım Çözümü</h4>
+                        <p class="text-zinc-400 text-xs mb-6">Yapay zeka araçları için tasarlanmış karanlık temalı fütüristik tanıtım sayfası.</p>
+                    </div>
+                    <a href="https://example.com/proje-6" target="_blank" class="text-xs text-white underline underline-offset-4 cursor-pointer inline-block">İncele →</a>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Partnerler / İş Ortakları -->
+        <section class="mb-24">
+            <h3 class="text-xs uppercase tracking-[0.25em] text-zinc-500 mb-8 border-b border-zinc-900 pb-2">Partnerler</h3>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+                <div class="border border-zinc-900 py-6 text-zinc-500 text-sm tracking-widest font-mono">PARTNER_01</div>
+                <div class="border border-zinc-900 py-6 text-zinc-500 text-sm tracking-widest font-mono">PARTNER_02</div>
+                <div class="border border-zinc-900 py-6 text-zinc-500 text-sm tracking-widest font-mono">PARTNER_03</div>
+                <div class="border border-zinc-900 py-6 text-zinc-500 text-sm tracking-widest font-mono">PARTNER_04</div>
+            </div>
+        </section>
+
+        <!-- Ufak Tefek Bilgiler / Footer -->
+        <footer class="border-t border-zinc-800 pt-8 pb-12 flex flex-col md:flex-row justify-between items-start md:items-center text-xs text-zinc-500 gap-4">
+            <div>
+                <p class="text-zinc-300 font-medium mb-1">NruS Creativ Dijital Hizmetler</p>
+                <p>Tüm hakları saklıdır. Minimalist ve yüksek performanslı web mimarisi.</p>
+            </div>
+            <div class="font-mono tracking-wider flex items-center gap-4">
+                <span>STATUS: ONLINE // 2026</span>
+            </div>
+        </footer>
+
+    </main>
+
+    <script>
+        // Sayfa yüklendikten 2 saniye sonra splash ekranını kaldır ve ana içeriği göster
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                const splash = document.getElementById('splash-screen');
+                const mainContent = document.getElementById('main-content');
+                
+                if (splash && mainContent) {
+                    splash.classList.add('fade-out');
+                    mainContent.classList.remove('opacity-0');
+                }
+            }, 2000); 
+        });
+
+        // Proje Filtreleme Fonksiyonu
+        function filterProjects(category) {
+            const cards = document.querySelectorAll('.project-card');
+            const buttons = document.querySelectorAll('.filter-btn');
+
+            // Buton aktiflik sınıflarını güncelle
+            buttons.forEach(btn => {
+                btn.classList.remove('border-white', 'text-white');
+                btn.classList.add('border-zinc-800', 'text-zinc-400');
+            });
+            event.target.classList.remove('border-zinc-800', 'text-zinc-400');
+            event.target.classList.add('border-white', 'text-white');
+
+            // Kartları filtrele
+            cards.forEach(card => {
+                if (category === 'all' || card.dataset.category === category) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+    </script>
+
+</body>
+</html>
