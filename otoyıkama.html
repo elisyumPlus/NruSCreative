@@ -1,0 +1,1524 @@
+<!DOCTYPE html>
+<html lang="tr" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NruS Creativ | Premium Otomotiv Estetiği & Detaylı Bakım Stüdyosu</title>
+    
+    <!-- Google Fonts: Outfit (Display & Headings) & Plus Jakarta Sans (Body Text) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        obsidian: '#08080a',
+                        darkPanel: '#0f0f14',
+                        cardBg: 'rgba(15, 15, 20, 0.75)',
+                        crimson: '#ff003c',
+                        crimsonDark: '#b91c1c',
+                        crimsonGlow: 'rgba(255, 0, 60, 0.4)',
+                        slateSubtle: '#94a3b8'
+                    },
+                    fontFamily: {
+                        outfit: ['Outfit', 'sans-serif'],
+                        jakarta: ['Plus Jakarta Sans', 'sans-serif']
+                    },
+                    boxShadow: {
+                        'crimson-glow': '0 0 25px rgba(255, 0, 60, 0.35)',
+                        'crimson-strong': '0 0 45px rgba(255, 0, 60, 0.65)',
+                        'glass-card': '0 12px 40px 0 rgba(0, 0, 0, 0.6)'
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Three.js & GSAP Animation Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #08080a;
+            color: #f8fafc;
+        }
+        
+        h1, h2, h3, h4, h5, h6, .font-display {
+            font-family: 'Outfit', sans-serif;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #08080a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1e1e24;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #ff003c;
+        }
+
+        /* Premium Glassmorphic Surfaces */
+        .glass-panel {
+            background: rgba(15, 15, 20, 0.75);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+        }
+
+        .glass-nav {
+            background: rgba(8, 8, 10, 0.88);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-bottom: 1px solid rgba(255, 0, 60, 0.15);
+        }
+
+        .text-gradient-crimson {
+            background: linear-gradient(135deg, #ffffff 0%, #ff003c 60%, #ff4d6d 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .crimson-border-glow:hover, .crimson-border-glow:focus-within {
+            border-color: #ff003c;
+            box-shadow: 0 0 20px rgba(255, 0, 60, 0.4);
+        }
+
+        /* Fixed Watermark Badge Style */
+        .watermark-badge {
+            position: fixed;
+            bottom: 1rem;
+            right: 1rem;
+            z-index: 9999;
+            pointer-events: auto;
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.2); }
+        }
+
+        .pulse-dot {
+            animation: pulseGlow 2s infinite ease-in-out;
+        }
+    </style>
+</head>
+<body class="bg-obsidian text-slate-100 font-jakarta antialiased overflow-x-hidden selection:bg-crimson selection:text-white">
+
+    <!-- Fixed Bottom-Right Watermark / Disclaimer -->
+    <div class="watermark-badge select-none">
+        <div class="glass-panel px-4 py-2 rounded-full border border-crimson/40 shadow-crimson-glow flex items-center gap-2.5 backdrop-blur-md hover:scale-105 transition-transform">
+            <span class="w-2.5 h-2.5 rounded-full bg-crimson shadow-[0_0_10px_#ff003c] pulse-dot"></span>
+            <span class="font-outfit font-bold text-xs uppercase tracking-widest text-white">Örnek Tasarımdır</span>
+        </div>
+    </div>
+
+    <!-- Notification Toast Container -->
+    <div id="toast-container" class="fixed bottom-16 right-4 z-50 flex flex-col gap-3 pointer-events-none"></div>
+
+    <!-- Header / Navbar -->
+    <header class="fixed top-0 left-0 w-full z-40 glass-nav transition-all duration-300" id="main-header">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            
+            <!-- Company Branding Logo -->
+            <a href="#" class="flex items-center gap-3.5 group">
+                <div class="w-11 h-11 rounded-xl bg-gradient-to-tr from-crimson to-crimsonDark p-[2px] shadow-crimson-glow group-hover:scale-105 transition-transform duration-300">
+                    <div class="w-full h-full bg-obsidian rounded-[10px] flex items-center justify-center">
+                        <span class="font-outfit font-black text-crimson text-xl tracking-tighter">NC</span>
+                    </div>
+                </div>
+                <div class="flex flex-col">
+                    <span class="font-outfit font-extrabold text-2xl tracking-tight text-white flex items-center gap-2">
+                        NruS <span class="text-crimson font-light">Creativ</span>
+                    </span>
+                    <span class="text-[9px] font-semibold tracking-[0.25em] text-slate-400 uppercase -mt-1">Automotive Studio</span>
+                </div>
+            </a>
+
+            <!-- Desktop Navigation Links -->
+            <nav class="hidden md:flex items-center gap-9 font-medium text-sm text-slate-300">
+                <a href="#services" class="hover:text-crimson transition-colors py-1 relative group tracking-wide">
+                    Hizmetlerimiz
+                    <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-crimson transition-all duration-300 group-hover:w-full"></span>
+                </a>
+                <a href="#calculator" class="hover:text-crimson transition-colors py-1 relative group tracking-wide">
+                    Fiyat Hesaplayıcı
+                    <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-crimson transition-all duration-300 group-hover:w-full"></span>
+                </a>
+                <a href="#process" class="hover:text-crimson transition-colors py-1 relative group tracking-wide">
+                    Süreç
+                    <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-crimson transition-all duration-300 group-hover:w-full"></span>
+                </a>
+                <a href="#contact" class="hover:text-crimson transition-colors py-1 relative group tracking-wide">
+                    İletişim
+                    <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-crimson transition-all duration-300 group-hover:w-full"></span>
+                </a>
+            </nav>
+
+            <!-- Quick Action Buttons -->
+            <div class="hidden lg:flex items-center gap-4">
+                <button onclick="openStatusModal()" class="flex items-center gap-2 text-xs font-bold px-4 py-2.5 rounded-xl bg-slate-900/90 hover:bg-slate-800 border border-slate-700/80 text-slate-200 transition-all hover:border-crimson/50">
+                    <span class="w-2 h-2 rounded-full bg-crimson animate-ping"></span>
+                    Araç Durum Sorgula
+                </button>
+
+                <button onclick="openBookingModal()" class="relative inline-flex items-center justify-center p-0.5 overflow-hidden text-sm font-bold rounded-xl group bg-gradient-to-r from-crimson to-red-700 hover:shadow-crimson-strong transition-all duration-300">
+                    <span class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-obsidian rounded-[10px] group-hover:bg-opacity-0 text-white flex items-center gap-2">
+                        <i class="fa-solid fa-calendar-check text-crimson group-hover:text-white transition-colors"></i>
+                        Randevu Al
+                    </span>
+                </button>
+            </div>
+
+            <!-- Mobile Drawer Button -->
+            <button id="mobile-menu-btn" class="md:hidden text-slate-300 hover:text-white text-2xl focus:outline-none">
+                <i class="fa-solid fa-bars-staggered"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Drawer Navigation -->
+        <div id="mobile-menu" class="hidden md:hidden glass-panel border-t border-slate-800 px-6 py-6 flex flex-col gap-4">
+            <a href="#services" class="mobile-nav-link text-lg font-bold text-slate-200 hover:text-crimson">Hizmetlerimiz</a>
+            <a href="#calculator" class="mobile-nav-link text-lg font-bold text-slate-200 hover:text-crimson">Fiyat Hesaplayıcı</a>
+            <a href="#process" class="mobile-nav-link text-lg font-bold text-slate-200 hover:text-crimson">Süreç</a>
+            <a href="#contact" class="mobile-nav-link text-lg font-bold text-slate-200 hover:text-crimson">İletişim</a>
+            <div class="pt-4 border-t border-slate-800/80 flex flex-col gap-3">
+                <button onclick="openStatusModal()" class="w-full py-3 rounded-xl bg-slate-800 border border-slate-700 text-slate-200 font-bold flex items-center justify-center gap-2 text-sm">
+                    <i class="fa-solid fa-magnifying-glass text-crimson"></i> Araç Durumu Sorgula
+                </button>
+                <button onclick="openBookingModal()" class="w-full py-3 rounded-xl bg-gradient-to-r from-crimson to-crimsonDark text-white font-bold text-sm shadow-crimson-glow flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-calendar-check"></i> Randevu Al
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section with Realistic 3D Wheel Interactive Background -->
+    <section class="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
+        <!-- Three.js Canvas Container -->
+        <div id="hero-canvas-container" class="absolute inset-0 z-0 opacity-90 pointer-events-none"></div>
+
+        <!-- Gradient Vignette -->
+        <div class="absolute inset-0 bg-gradient-to-b from-obsidian/30 via-obsidian/75 to-obsidian z-10 pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20 text-center py-16">
+            <!-- Studio Badge Tag -->
+            <div class="inline-flex items-center gap-2.5 px-4 py-2 rounded-full glass-panel border-crimson/30 mb-8 shadow-crimson-glow">
+                <span class="w-2 h-2 rounded-full bg-crimson shadow-[0_0_10px_#ff003c]"></span>
+                <span class="text-xs font-bold tracking-widest text-slate-300 uppercase">NruS Creativ Automotive & Detailing Studio</span>
+            </div>
+
+            <!-- Headline -->
+            <h1 class="font-outfit font-black text-5xl sm:text-7xl md:text-8xl tracking-tight leading-[1.05] mb-6">
+                GELECEĞİN <br>
+                <span class="text-gradient-crimson">OTOMOTİV ESTETİĞİ</span>
+            </h1>
+
+            <p class="max-w-2xl mx-auto text-slate-400 text-base sm:text-xl font-normal mb-10 leading-relaxed tracking-wide">
+                NruS Creativ; 9H Seramik Kaplama, PPF Şeffaf Gövde Koruma ve Detaylı İç Sterilizasyon ile aracınızı kusursuzluğun zirvesine taşır.
+            </p>
+
+            <!-- CTA Buttons -->
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-5">
+                <button onclick="openBookingModal()" class="w-full sm:w-auto px-9 py-4 rounded-xl bg-gradient-to-r from-crimson to-crimsonDark text-white font-bold text-base shadow-crimson-glow hover:shadow-crimson-strong hover:scale-105 transition-all flex items-center justify-center gap-3">
+                    <i class="fa-solid fa-wand-magic-sparkles text-lg"></i>
+                    Hemen Randevu Al
+                </button>
+
+                <a href="#calculator" class="w-full sm:w-auto px-9 py-4 rounded-xl glass-panel text-slate-200 font-bold text-base hover:bg-slate-800/80 hover:border-crimson/50 transition-all flex items-center justify-center gap-3">
+                    <i class="fa-solid fa-calculator text-crimson"></i>
+                    Fiyat Hesapla
+                </a>
+            </div>
+
+            <!-- Key Metrics Stats -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mt-16 pt-12 border-t border-slate-800/80 max-w-4xl mx-auto">
+                <div class="flex flex-col items-center">
+                    <span class="font-outfit font-black text-3xl sm:text-4xl text-crimson">2.800+</span>
+                    <span class="text-xs font-semibold text-slate-400 mt-1 uppercase tracking-wider">Tamamlanan Araç</span>
+                </div>
+                <div class="flex flex-col items-center">
+                    <span class="font-outfit font-black text-3xl sm:text-4xl text-white">%100</span>
+                    <span class="text-xs font-semibold text-slate-400 mt-1 uppercase tracking-wider">Müşteri Memnuniyeti</span>
+                </div>
+                <div class="flex flex-col items-center">
+                    <span class="font-outfit font-black text-3xl sm:text-4xl text-crimson">9H / PPF</span>
+                    <span class="text-xs font-semibold text-slate-400 mt-1 uppercase tracking-wider">Sertifikalı Malzeme</span>
+                </div>
+                <div class="flex flex-col items-center">
+                    <span class="font-outfit font-black text-3xl sm:text-4xl text-white">10 Yıl</span>
+                    <span class="text-xs font-semibold text-slate-400 mt-1 uppercase tracking-wider">Gövde Koruma Garantisi</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick Plate Search Banner -->
+    <section class="py-10 bg-darkPanel border-y border-slate-800/80 relative z-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="glass-panel p-6 sm:p-8 rounded-3xl border border-crimson/20 flex flex-col lg:flex-row items-center justify-between gap-8">
+                <div class="flex items-center gap-5">
+                    <div class="w-14 h-14 rounded-2xl bg-crimson/10 border border-crimson/30 flex items-center justify-center text-crimson text-2xl shrink-0">
+                        <i class="fa-solid fa-list-check"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-outfit font-bold text-xl sm:text-2xl text-white">Canlı Araç Durum Takibi</h3>
+                        <p class="text-slate-400 text-xs sm:text-sm mt-1">Stüdyomuzdaki aracınızın şu an hangi aşamada olduğunu plakanızla anında sorgulayın.</p>
+                    </div>
+                </div>
+
+                <div class="w-full lg:w-auto flex flex-col sm:flex-row items-center gap-3">
+                    <div class="relative w-full sm:w-64">
+                        <input type="text" id="banner-plate-input" placeholder="ÖRN: 34 NRS 01" class="w-full bg-obsidian border border-slate-700/80 rounded-xl px-4 py-3.5 text-white placeholder-slate-500 uppercase tracking-widest font-mono font-bold focus:outline-none focus:border-crimson focus:ring-1 focus:ring-crimson">
+                    </div>
+                    <button onclick="searchPlateFromBanner()" class="w-full sm:w-auto px-7 py-3.5 rounded-xl bg-crimson hover:bg-red-600 text-white font-bold text-sm transition-all shadow-crimson-glow flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-magnifying-glass"></i> Sorgula
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-24 relative z-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-xs font-bold text-crimson uppercase tracking-widest mb-3">Hizmet Standartlarımız</h2>
+                <h3 class="font-outfit font-extrabold text-3xl sm:text-5xl text-white">PREMİUM BAKIM PAKETLERİ</h3>
+                <p class="text-slate-400 text-sm sm:text-base mt-4">NruS Creativ stüdyolarında uygulanan son teknoloji seramik, koruma ve detaylandırma çözümleri.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Card 1 -->
+                <div class="glass-panel rounded-3xl p-8 flex flex-col justify-between hover:border-crimson/50 transition-all duration-300 hover:-translate-y-2 group">
+                    <div>
+                        <div class="w-14 h-14 rounded-2xl bg-slate-800/80 border border-slate-700/80 flex items-center justify-center text-crimson text-2xl mb-6 group-hover:bg-crimson group-hover:text-white transition-colors shadow-lg">
+                            <i class="fa-solid fa-shield-halved"></i>
+                        </div>
+                        <h4 class="font-outfit font-bold text-2xl text-white mb-2">9H Seramik Kaplama</h4>
+                        <p class="text-slate-400 text-xs leading-relaxed mb-6">Aracınıza yüksek parlaklık, hidrofobik su iticilik ve kılcal çizik direnci sağlayan 9H sertifikalı nanoteknoloji koruma.</p>
+                        
+                        <ul class="space-y-3 text-xs text-slate-300 mb-8 border-t border-slate-800/80 pt-5">
+                            <li class="flex items-center gap-2.5"><i class="fa-solid fa-circle-check text-crimson"></i> 3 Yıl ve 5 Yıl Garanti Belgesi</li>
+                            <li class="flex items-center gap-2.5"><i class="fa-solid fa-circle-check text-crimson"></i> Yüksek Hidrofobik Su İticilik</li>
+                            <li class="flex items-center gap-2.5"><i class="fa-solid fa-circle-check text-crimson"></i> UV Filtresi & Kimyasal Direnç</li>
+                            <li class="flex items-center gap-2.5"><i class="fa-solid fa-circle-check text-crimson"></i> Jant & Cam Seramik Koruması</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <div class="text-crimson font-outfit font-bold text-3xl mb-4">₺8.500 <span class="text-xs font-normal text-slate-400">/ başlangıç</span></div>
+                        <button onclick="selectPackageAndBook('9H Seramik Kaplama')" class="w-full py-3.5 rounded-xl bg-slate-800/80 hover:bg-crimson hover:text-white text-slate-200 font-bold text-xs transition-all border border-slate-700/50">
+                            Paketi Seç & Randevu Al
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Card 2 (Featured) -->
+                <div class="glass-panel rounded-3xl p-8 flex flex-col justify-between border-crimson/50 hover:border-crimson transition-all duration-300 hover:-translate-y-2 relative group shadow-crimson-glow">
+                    <div class="absolute -top-3.5 right-6 bg-gradient-to-r from-crimson to-crimsonDark text-white text-[10px] font-black uppercase px-3.5 py-1 rounded-full tracking-wider shadow-lg">
+                        En Çok Tercih Edilen
+                    </div>
+                    <div>
+                        <div class="w-14 h-14 rounded-2xl bg-crimson/10 border border-crimson/30 flex items-center justify-center text-crimson text-2xl mb-6">
+                            <i class="fa-solid fa-car-side"></i>
+                        </div>
+                        <h4 class="font-outfit font-bold text-2xl text-white mb-2">PPF Şeffaf Gövde Kaplama</h4>
+                        <p class="text-slate-400 text-xs leading-relaxed mb-6">Kendini onaran TPU poliüretan şeffaf koruma filmi ile kaporta boyasını taş vuruklarına ve çiziklere karşı %100 koruyun.</p>
+                        
+                        <ul class="space-y-3 text-xs text-slate-300 mb-8 border-t border-slate-800/80 pt-5">
+                            <li class="flex items-center gap-2.5"><i class="fa-solid fa-circle-check text-crimson"></i> 10 Yıl Sararmazlık Garantisi</li>
+                            <li class="flex items-center gap-2.5"><i class="fa-solid fa-circle-check text-crimson"></i> Sıcak suda Kendini Onaran Yüzey</li>
+                            <li class="flex items-center gap-2.5"><i class="fa-solid fa-circle-check text-crimson"></i> Taş Vurukları & Çizik Koruması</li>
+                            <li class="flex items-center gap-2.5"><i class="fa-solid fa-circle-check text-crimson"></i> Şeffaf / Parlak veya Mat Seçeneği</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <div class="text-crimson font-outfit font-bold text-3xl mb-4">₺35.000 <span class="text-xs font-normal text-slate-400">/ başlangıç</span></div>
+                        <button onclick="selectPackageAndBook('PPF Şeffaf Gövde Kaplama')" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-crimson to-crimsonDark text-white font-bold text-xs shadow-crimson-glow hover:shadow-crimson-strong transition-all">
+                            Paketi Seç & Randevu Al
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="glass-panel rounded-3xl p-8 flex flex-col justify-between hover:border-crimson/50 transition-all duration-300 hover:-translate-y-2 group">
+                    <div>
+                        <div class="w-14 h-14 rounded-2xl bg-slate-800/80 border border-slate-700/80 flex items-center justify-center text-crimson text-2xl mb-6 group-hover:bg-crimson group-hover:text-white transition-colors shadow-lg">
+                            <i class="fa-solid fa-spray-can-sparkles"></i>
+                        </div>
+                        <h4 class="font-outfit font-bold text-2xl text-white mb-2">Detaylı İç Sterilizasyon</h4>
+                        <p class="text-slate-400 text-xs leading-relaxed mb-6">Koltuk sökümlü yüksek sıcaklıklı buharlı temizlik, deri besleme koruması ve medikal derece ozon dezenfeksiyonu.</p>
+                        
+                        <ul class="space-y-3 text-xs text-slate-300 mb-8 border-t border-slate-800/80 pt-5">
+                            <li class="flex items-center gap-2.5"><i class="fa-solid fa-circle-check text-crimson"></i> Buharlı Koltuk & Taban Yıkama</li>
+                            <li class="flex items-center gap-2.5"><i class="fa-solid fa-circle-check text-crimson"></i> Medikal Ozon Dezenfeksiyonu</li>
+                            <li class="flex items-center gap-2.5"><i class="fa-solid fa-circle-check text-crimson"></i> Deri Koltuk Koruma Cilası</li>
+                            <li class="flex items-center gap-2.5"><i class="fa-solid fa-circle-check text-crimson"></i> Klima Kanal Dezenfeksiyonu</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <div class="text-crimson font-outfit font-bold text-3xl mb-4">₺2.800 <span class="text-xs font-normal text-slate-400">/ başlangıç</span></div>
+                        <button onclick="selectPackageAndBook('Detaylı İç Sterilizasyon')" class="w-full py-3.5 rounded-xl bg-slate-800/80 hover:bg-crimson hover:text-white text-slate-200 font-bold text-xs transition-all border border-slate-700/50">
+                            Paketi Seç & Randevu Al
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="glass-panel rounded-3xl p-8 flex flex-col justify-between hover:border-crimson/50 transition-all duration-300 hover:-translate-y-2 group">
+                    <div>
+                        <div class="w-14 h-14 rounded-2xl bg-slate-800/80 border border-slate-700/80 flex items-center justify-center text-crimson text-2xl mb-6 group-hover:bg-crimson group-hover:text-white transition-colors shadow-lg">
+                            <i class="fa-solid fa-wand-magic-sparkles"></i>
+                        </div>
+                        <h4 class="font-outfit font-bold text-2xl text-white mb-2">3 Aşama Polisaj & Cila</h4>
+                        <p class="text-slate-400 text-xs leading-relaxed mb-6">Hologram giderme, hare temizliği ve derin çizik düzeltme işlemleri ile fabrika çıkışı boya parlaklığı.</p>
+                        
+                        <ul class="space-y-3 text-xs text-slate-300 mb-8 border-t border-slate-800/80 pt-5">
+                            <li class="flex items-center gap-2.5"><i class="fa-solid fa-circle-check text-crimson"></i> Ağır & İnce Kesim Polisaj</li>
+                            <li class="flex items-center gap-2.5"><i class="fa-solid fa-circle-check text-crimson"></i> Hare & Hologram Temizliği</li>
+                            <li class="flex items-center gap-2.5"><i class="fa-solid fa-circle-check text-crimson"></i> Reçine & Zift Arındırma</li>
+                            <li class="flex items-center gap-2.5"><i class="fa-solid fa-circle-check text-crimson"></i> Koruyucu Cila Katmanı</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <div class="text-crimson font-outfit font-bold text-3xl mb-4">₺4.500 <span class="text-xs font-normal text-slate-400">/ başlangıç</span></div>
+                        <button onclick="selectPackageAndBook('3 Aşama Polisaj & Cila')" class="w-full py-3.5 rounded-xl bg-slate-800/80 hover:bg-crimson hover:text-white text-slate-200 font-bold text-xs transition-all border border-slate-700/50">
+                            Paketi Seç & Randevu Al
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Card 5 -->
+                <div class="glass-panel rounded-3xl p-8 flex flex-col justify-between hover:border-crimson/50 transition-all duration-300 hover:-translate-y-2 group">
+                    <div>
+                        <div class="w-14 h-14 rounded-2xl bg-slate-800/80 border border-slate-700/80 flex items-center justify-center text-crimson text-2xl mb-6 group-hover:bg-crimson group-hover:text-white transition-colors shadow-lg">
+                            <i class="fa-solid fa-sun"></i>
+                        </div>
+                        <h4 class="font-outfit font-bold text-2xl text-white mb-2">Cam Filmi & Seramik Su İtici</h4>
+                        <p class="text-slate-400 text-xs leading-relaxed mb-6">Isı reddetme özellikli UV korumalı cam filmleri ve şiddetli yağmurda görüş sağlayan cam seramiği.</p>
+                        
+                        <ul class="space-y-3 text-xs text-slate-300 mb-8 border-t border-slate-800/80 pt-5">
+                            <li class="flex items-center gap-2.5"><i class="fa-solid fa-circle-check text-crimson"></i> %99 UV & Kızılötesi Isı Engelleme</li>
+                            <li class="flex items-center gap-2.5"><i class="fa-solid fa-circle-check text-crimson"></i> Çizilmeye Dayanıklı Film Katmanı</li>
+                            <li class="flex items-center gap-2.5"><i class="fa-solid fa-circle-check text-crimson"></i> Ön Cam Yağmur Kaydırıcı Seramik</li>
+                            <li class="flex items-center gap-2.5"><i class="fa-solid fa-circle-check text-crimson"></i> 5 Yıl Renk Solmazlık Garantisi</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <div class="text-crimson font-outfit font-bold text-3xl mb-4">₺3.200 <span class="text-xs font-normal text-slate-400">/ başlangıç</span></div>
+                        <button onclick="selectPackageAndBook('Cam Filmi & Seramik Su İtici')" class="w-full py-3.5 rounded-xl bg-slate-800/80 hover:bg-crimson hover:text-white text-slate-200 font-bold text-xs transition-all border border-slate-700/50">
+                            Paketi Seç & Randevu Al
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Card 6 -->
+                <div class="glass-panel rounded-3xl p-8 flex flex-col justify-between hover:border-crimson/50 transition-all duration-300 hover:-translate-y-2 group">
+                    <div>
+                        <div class="w-14 h-14 rounded-2xl bg-slate-800/80 border border-slate-700/80 flex items-center justify-center text-crimson text-2xl mb-6 group-hover:bg-crimson group-hover:text-white transition-colors shadow-lg">
+                            <i class="fa-solid fa-microchip"></i>
+                        </div>
+                        <h4 class="font-outfit font-bold text-2xl text-white mb-2">Motor Detaylandırma & Koruma</h4>
+                        <p class="text-slate-400 text-xs leading-relaxed mb-6">Elektrik aksamına zarar vermeyen kuru buharlı motor yıkama ve dielektrik koruyucu koruma kaplaması.</p>
+                        
+                        <ul class="space-y-3 text-xs text-slate-300 mb-8 border-t border-slate-800/80 pt-5">
+                            <li class="flex items-center gap-2.5"><i class="fa-solid fa-circle-check text-crimson"></i> Kuru Buharlı Hassas Temizlik</li>
+                            <li class="flex items-center gap-2.5"><i class="fa-solid fa-circle-check text-crimson"></i> Dielektrik Koruyucu Katman</li>
+                            <li class="flex items-center gap-2.5"><i class="fa-solid fa-circle-check text-crimson"></i> Plastik & Kauçuk Aksam Parlatma</li>
+                            <li class="flex items-center gap-2.5"><i class="fa-solid fa-circle-check text-crimson"></i> Toz İtici Antistatik Yüzey</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <div class="text-crimson font-outfit font-bold text-3xl mb-4">₺1.500 <span class="text-xs font-normal text-slate-400">/ başlangıç</span></div>
+                        <button onclick="selectPackageAndBook('Motor Detaylandırma & Koruma')" class="w-full py-3.5 rounded-xl bg-slate-800/80 hover:bg-crimson hover:text-white text-slate-200 font-bold text-xs transition-all border border-slate-700/50">
+                            Paketi Seç & Randevu Al
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Price & Time Calculator -->
+    <section id="calculator" class="py-24 bg-darkPanel relative z-20 border-y border-slate-800/80">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-xs font-bold text-crimson uppercase tracking-widest mb-3">Şeffaf Maliyet Yönetimi</h2>
+                <h3 class="font-outfit font-extrabold text-3xl sm:text-5xl text-white">İNTERAKTİF FİYAT HESAPLAYICI</h3>
+                <p class="text-slate-400 text-sm sm:text-base mt-4">Araç segmentinizi ve talep ettiğiniz uygulamaları seçerek tahmini stüdyo bedelini anında görün.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                
+                <!-- Vehicle & Service Selection Panel -->
+                <div class="lg:col-span-8 glass-panel rounded-3xl p-6 sm:p-8 space-y-8">
+                    <!-- Segment Selection -->
+                    <div>
+                        <label class="block font-outfit font-bold text-lg text-white mb-4 flex items-center gap-2.5">
+                            <span class="w-7 h-7 rounded-full bg-crimson text-white text-xs flex items-center justify-center font-bold">1</span>
+                            Araç Segmentinizi Seçin
+                        </label>
+
+                        <div class="grid grid-cols-2 sm:grid-cols-5 gap-3" id="vehicle-type-selector">
+                            <button type="button" data-multiplier="1.0" data-name="Hatchback" class="vehicle-btn flex flex-col items-center justify-center p-4 rounded-2xl border border-crimson bg-crimson/10 text-white transition-all">
+                                <i class="fa-solid fa-car-side text-2xl mb-2 text-crimson"></i>
+                                <span class="text-xs font-bold">Hatchback</span>
+                            </button>
+                            <button type="button" data-multiplier="1.2" data-name="Sedan" class="vehicle-btn flex flex-col items-center justify-center p-4 rounded-2xl border border-slate-800 bg-obsidian text-slate-400 hover:border-slate-700 transition-all">
+                                <i class="fa-solid fa-car text-2xl mb-2"></i>
+                                <span class="text-xs font-bold">Sedan</span>
+                            </button>
+                            <button type="button" data-multiplier="1.4" data-name="SUV / Crossover" class="vehicle-btn flex flex-col items-center justify-center p-4 rounded-2xl border border-slate-800 bg-obsidian text-slate-400 hover:border-slate-700 transition-all">
+                                <i class="fa-solid fa-truck-monster text-2xl mb-2"></i>
+                                <span class="text-xs font-bold">SUV / Cross</span>
+                            </button>
+                            <button type="button" data-multiplier="1.6" data-name="Spor / Exotic" class="vehicle-btn flex flex-col items-center justify-center p-4 rounded-2xl border border-slate-800 bg-obsidian text-slate-400 hover:border-slate-700 transition-all">
+                                <i class="fa-solid fa-car-rear text-2xl mb-2"></i>
+                                <span class="text-xs font-bold">Spor / Exotic</span>
+                            </button>
+                            <button type="button" data-multiplier="1.8" data-name="VIP Minibüs" class="vehicle-btn flex flex-col items-center justify-center p-4 rounded-2xl border border-slate-800 bg-obsidian text-slate-400 hover:border-slate-700 transition-all">
+                                <i class="fa-solid fa-van-shuttle text-2xl mb-2"></i>
+                                <span class="text-xs font-bold">VIP Minibüs</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Services Checklist -->
+                    <div>
+                        <label class="block font-outfit font-bold text-lg text-white mb-4 flex items-center gap-2.5">
+                            <span class="w-7 h-7 rounded-full bg-crimson text-white text-xs flex items-center justify-center font-bold">2</span>
+                            Uygulama Hizmetlerini Seçin
+                        </label>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4" id="services-checklist">
+                            <label class="flex items-start gap-3.5 p-4 rounded-2xl bg-obsidian border border-slate-800 hover:border-slate-700 cursor-pointer transition-all select-none">
+                                <input type="checkbox" checked data-price="8500" data-time="24" data-title="9H Seramik Kaplama" class="service-checkbox mt-1 w-4 h-4 accent-crimson rounded">
+                                <div>
+                                    <div class="text-sm font-bold text-white">9H Seramik Kaplama</div>
+                                    <div class="text-xs text-slate-400 mt-0.5">3 Yıl Garantili Nanoteknoloji Koruma</div>
+                                    <div class="text-xs text-crimson font-bold mt-1">₺8.500 • 1 Gün</div>
+                                </div>
+                            </label>
+
+                            <label class="flex items-start gap-3.5 p-4 rounded-2xl bg-obsidian border border-slate-800 hover:border-slate-700 cursor-pointer transition-all select-none">
+                                <input type="checkbox" data-price="35000" data-time="48" data-title="PPF Şeffaf Gövde Kaplama" class="service-checkbox mt-1 w-4 h-4 accent-crimson rounded">
+                                <div>
+                                    <div class="text-sm font-bold text-white">PPF Şeffaf Gövde Kaplama</div>
+                                    <div class="text-xs text-slate-400 mt-0.5">10 Yıl Garantili TPU Şeffaf Film</div>
+                                    <div class="text-xs text-crimson font-bold mt-1">₺35.000 • 2 Gün</div>
+                                </div>
+                            </label>
+
+                            <label class="flex items-start gap-3.5 p-4 rounded-2xl bg-obsidian border border-slate-800 hover:border-slate-700 cursor-pointer transition-all select-none">
+                                <input type="checkbox" data-price="2800" data-time="4" data-title="Detaylı İç Sterilizasyon" class="service-checkbox mt-1 w-4 h-4 accent-crimson rounded">
+                                <div>
+                                    <div class="text-sm font-bold text-white">Detaylı İç Sterilizasyon</div>
+                                    <div class="text-xs text-slate-400 mt-0.5">Buharlı Yıkama & Ozon Temizliği</div>
+                                    <div class="text-xs text-crimson font-bold mt-1">₺2.800 • 4 Saat</div>
+                                </div>
+                            </label>
+
+                            <label class="flex items-start gap-3.5 p-4 rounded-2xl bg-obsidian border border-slate-800 hover:border-slate-700 cursor-pointer transition-all select-none">
+                                <input type="checkbox" data-price="4500" data-time="6" data-title="3 Aşama Polisaj & Cila" class="service-checkbox mt-1 w-4 h-4 accent-crimson rounded">
+                                <div>
+                                    <div class="text-sm font-bold text-white">3 Aşama Polisaj & Cila</div>
+                                    <div class="text-xs text-slate-400 mt-0.5">Hare Giderme & Parlaklık Cilası</div>
+                                    <div class="text-xs text-crimson font-bold mt-1">₺4.500 • 6 Saat</div>
+                                </div>
+                            </label>
+
+                            <label class="flex items-start gap-3.5 p-4 rounded-2xl bg-obsidian border border-slate-800 hover:border-slate-700 cursor-pointer transition-all select-none">
+                                <input type="checkbox" data-price="3200" data-time="3" data-title="Cam Filmi & Seramik Su İtici" class="service-checkbox mt-1 w-4 h-4 accent-crimson rounded">
+                                <div>
+                                    <div class="text-sm font-bold text-white">Cam Filmi & Seramik Su İtici</div>
+                                    <div class="text-xs text-slate-400 mt-0.5">UV Korumalı Cam Filmi & Yağmur İtici</div>
+                                    <div class="text-xs text-crimson font-bold mt-1">₺3.200 • 3 Saat</div>
+                                </div>
+                            </label>
+
+                            <label class="flex items-start gap-3.5 p-4 rounded-2xl bg-obsidian border border-slate-800 hover:border-slate-700 cursor-pointer transition-all select-none">
+                                <input type="checkbox" data-price="1500" data-time="2" data-title="Motor Detaylandırma" class="service-checkbox mt-1 w-4 h-4 accent-crimson rounded">
+                                <div>
+                                    <div class="text-sm font-bold text-white">Motor Detaylandırma</div>
+                                    <div class="text-xs text-slate-400 mt-0.5">Kuru Buhar & Dielektrik Koruma</div>
+                                    <div class="text-xs text-crimson font-bold mt-1">₺1.500 • 2 Saat</div>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Live Pricing Summary Sidebar -->
+                <div class="lg:col-span-4 glass-panel rounded-3xl p-6 sm:p-8 border-crimson/30 sticky top-28 shadow-crimson-glow">
+                    <h4 class="font-outfit font-bold text-xl text-white mb-6 pb-4 border-b border-slate-800 flex items-center justify-between">
+                        <span>Hesaplama Özeti</span>
+                        <i class="fa-solid fa-receipt text-crimson"></i>
+                    </h4>
+
+                    <div class="space-y-4 mb-8 text-sm">
+                        <div class="flex justify-between text-slate-400">
+                            <span>Seçilen Segment:</span>
+                            <span id="summary-vehicle-name" class="font-bold text-white">Hatchback</span>
+                        </div>
+                        <div class="flex justify-between text-slate-400">
+                            <span>Segment Çarpanı:</span>
+                            <span id="summary-multiplier" class="font-bold text-crimson">1.0x</span>
+                        </div>
+                        <div class="flex justify-between text-slate-400">
+                            <span>Tahmini İşlem Süresi:</span>
+                            <span id="summary-estimated-time" class="font-bold text-white">1 Gün</span>
+                        </div>
+
+                        <div class="border-t border-slate-800 pt-4 mt-4">
+                            <span class="text-xs font-semibold text-slate-400 block mb-2">Seçilen Hizmetler:</span>
+                            <div id="summary-services-list" class="space-y-1.5 text-xs text-slate-300">
+                                <!-- Dynamic items -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-obsidian rounded-2xl p-5 border border-slate-800 mb-6">
+                        <span class="text-xs text-slate-400 uppercase tracking-widest block mb-1">Toplam Tahmini Bedel</span>
+                        <div class="font-outfit font-black text-3xl sm:text-4xl text-crimson" id="calculated-total-price">
+                            ₺8.500
+                        </div>
+                        <span class="text-[10px] text-slate-500 mt-1 block">* KDV Dahil tahmini stüdyo teklif bedelidir.</span>
+                    </div>
+
+                    <button onclick="transferCalculatorToBooking()" class="w-full py-4 rounded-xl bg-gradient-to-r from-crimson to-crimsonDark text-white font-bold text-sm shadow-crimson-glow hover:shadow-crimson-strong transition-all flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-arrow-right"></i>
+                        Bu Seçimlerle Randevu Al
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Workflow Process Timeline Section -->
+    <section id="process" class="py-24 relative z-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-xs font-bold text-crimson uppercase tracking-widest mb-3">İş Akış Mantığımız</h2>
+                <h3 class="font-outfit font-extrabold text-3xl sm:text-5xl text-white">4 ADIMDA KUSURSUZLUK</h3>
+                <p class="text-slate-400 text-sm sm:text-base mt-4">NruS Creativ Stüdyosu'nda her araç titizlikle planlanmış 4 aşamalı standart süreçten geçer.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 relative">
+                <!-- Step 1 -->
+                <div class="glass-panel p-6 rounded-3xl relative">
+                    <div class="w-12 h-12 rounded-2xl bg-crimson text-white font-outfit font-black text-xl flex items-center justify-center mb-6 shadow-crimson-glow">
+                        01
+                    </div>
+                    <h4 class="font-outfit font-bold text-xl text-white mb-2">Ekspertiz & Analiz</h4>
+                    <p class="text-slate-400 text-xs leading-relaxed">Aracın boya mikron ölçümü, yüzey çizik analizi ve iç hijyen durumu detaylı dijital raporlanır.</p>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="glass-panel p-6 rounded-3xl relative">
+                    <div class="w-12 h-12 rounded-2xl bg-slate-800 text-slate-300 font-outfit font-black text-xl flex items-center justify-center mb-6 border border-slate-700">
+                        02
+                    </div>
+                    <h4 class="font-outfit font-bold text-xl text-white mb-2">Hassas Arındırma</h4>
+                    <p class="text-slate-400 text-xs leading-relaxed">Demir tozu temizliği, kil havlusu arındırması ve Maskeleme bantları ile hassas bölgeler korumaya alınır.</p>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="glass-panel p-6 rounded-3xl relative">
+                    <div class="w-12 h-12 rounded-2xl bg-slate-800 text-slate-300 font-outfit font-black text-xl flex items-center justify-center mb-6 border border-slate-700">
+                        03
+                    </div>
+                    <h4 class="font-outfit font-bold text-xl text-white mb-2">Uygulama & Kürlenme</h4>
+                    <p class="text-slate-400 text-xs leading-relaxed">İklim kontrollü steril stüdyo ortamında 9H Seramik veya PPF kaplama uygulaması ve IR ısı kürlenmesi yapılır.</p>
+                </div>
+
+                <!-- Step 4 -->
+                <div class="glass-panel p-6 rounded-3xl relative">
+                    <div class="w-12 h-12 rounded-2xl bg-slate-800 text-slate-300 font-outfit font-black text-xl flex items-center justify-center mb-6 border border-slate-700">
+                        04
+                    </div>
+                    <h4 class="font-outfit font-bold text-xl text-white mb-2">Son Kontrol & Teslim</h4>
+                    <p class="text-slate-400 text-xs leading-relaxed">Özel ışık altında son bakış kontrolü, garanti sertifikasının hazırlanması ve VIP anahtar teslimi.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact & Location Section -->
+    <section id="contact" class="py-24 bg-darkPanel relative z-20 border-t border-slate-800/80">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                
+                <div class="lg:col-span-5 space-y-8">
+                    <div>
+                        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-bold mb-4">
+                            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                            STÜDYO AÇIK (08:30 - 20:30)
+                        </div>
+                        <h3 class="font-outfit font-extrabold text-3xl sm:text-5xl text-white">İLETİŞİME GEÇİN</h3>
+                        <p class="text-slate-400 text-sm mt-3">Özel projeniz ve aracınız için kişiselleştirilmiş danışmanlık hizmeti sunuyoruz.</p>
+                    </div>
+
+                    <div class="space-y-4">
+                        <div class="glass-panel p-5 rounded-2xl flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-xl bg-crimson/10 border border-crimson/30 flex items-center justify-center text-crimson text-xl shrink-0">
+                                <i class="fa-solid fa-location-dot"></i>
+                            </div>
+                            <div>
+                                <h5 class="text-white font-bold text-sm">Stüdyo Adresi</h5>
+                                <p class="text-slate-400 text-xs mt-0.5">Atatürk Mah. Otomotiv Sanayi Sitesi NruS Plaza No:12, Mersin / Türkiye</p>
+                            </div>
+                        </div>
+
+                        <div class="glass-panel p-5 rounded-2xl flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-xl bg-crimson/10 border border-crimson/30 flex items-center justify-center text-crimson text-xl shrink-0">
+                                <i class="fa-solid fa-phone"></i>
+                            </div>
+                            <div>
+                                <h5 class="text-white font-bold text-sm">Telefon & WhatsApp</h5>
+                                <p class="text-slate-400 text-xs mt-0.5">+90 (532) 000 00 00 / +90 (324) 444 00 99</p>
+                            </div>
+                        </div>
+
+                        <div class="glass-panel p-5 rounded-2xl flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-xl bg-crimson/10 border border-crimson/30 flex items-center justify-center text-crimson text-xl shrink-0">
+                                <i class="fa-solid fa-clock"></i>
+                            </div>
+                            <div>
+                                <h5 class="text-white font-bold text-sm">Çalışma Saatlerimiz</h5>
+                                <p class="text-slate-400 text-xs mt-0.5">Pazartesi - Cumartesi: 08:30 - 20:30 | Pazar: Randevulu</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-4">
+                        <a href="https://wa.me/905320000000" target="_blank" class="flex-1 py-4 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-sm transition-all flex items-center justify-center gap-2 shadow-lg">
+                            <i class="fa-brands fa-whatsapp text-lg"></i> WhatsApp Bilgi
+                        </a>
+                        <button onclick="openBookingModal()" class="flex-1 py-4 rounded-xl bg-gradient-to-r from-crimson to-crimsonDark text-white font-bold text-sm transition-all flex items-center justify-center gap-2 shadow-crimson-glow">
+                            <i class="fa-solid fa-calendar-check"></i> Randevu Al
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Map Container -->
+                <div class="lg:col-span-7 glass-panel rounded-3xl p-4 border-slate-800 h-[420px] relative overflow-hidden flex items-center justify-center group">
+                    <div class="absolute inset-0 bg-cover bg-center filter grayscale opacity-30 group-hover:opacity-50 transition-all duration-700" style="background-image: url('https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?q=80&w=1200&auto=format&fit=crop');"></div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-obsidian via-obsidian/50 to-transparent"></div>
+                    
+                    <div class="relative z-10 text-center p-6 glass-panel rounded-2xl max-w-sm border-crimson/40 shadow-crimson-glow">
+                        <div class="w-12 h-12 rounded-full bg-crimson text-white flex items-center justify-center mx-auto mb-3 text-xl font-bold animate-bounce shadow-crimson-glow">
+                            <i class="fa-solid fa-location-dot"></i>
+                        </div>
+                        <h4 class="font-outfit font-bold text-white text-lg">NruS Creativ Studio</h4>
+                        <p class="text-slate-400 text-xs mt-1">Haritalarda yol tarifi almak ve stüdyomuzu ziyaret etmek için tıklayın.</p>
+                        <a href="https://maps.google.com" target="_blank" class="mt-4 inline-block px-6 py-2.5 rounded-xl bg-crimson text-white text-xs font-bold shadow-crimson-glow hover:bg-red-600 transition-all">
+                            Google Maps'te Yol Tarifi Al
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-obsidian border-t border-slate-800/80 py-12 relative z-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6">
+            <div class="flex items-center gap-3">
+                <div class="w-9 h-9 rounded-xl bg-crimson/20 border border-crimson/40 flex items-center justify-center text-crimson font-outfit font-black">
+                    NC
+                </div>
+                <span class="font-outfit font-bold text-white tracking-wider">NRUS CREATIV AUTOMOTIVE STUDIO</span>
+            </div>
+
+            <p class="text-slate-500 text-xs text-center md:text-left">
+                © 2026 NruS Creativ. Tüm hakları saklıdır. Premium Araç Estetiği Stüdyosu.
+            </p>
+
+            <div class="flex items-center gap-4 text-slate-400 text-lg">
+                <a href="#" class="hover:text-crimson transition-colors"><i class="fa-brands fa-instagram"></i></a>
+                <a href="#" class="hover:text-crimson transition-colors"><i class="fa-brands fa-youtube"></i></a>
+                <a href="#" class="hover:text-crimson transition-colors"><i class="fa-brands fa-facebook"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Multi-Step Interactive Booking Wizard Modal -->
+    <div id="booking-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-obsidian/85 backdrop-blur-md">
+        <div class="glass-panel max-w-2xl w-full rounded-3xl border-slate-700 shadow-2xl overflow-hidden relative">
+            <div class="px-6 py-5 border-b border-slate-800 flex justify-between items-center bg-darkPanel/60">
+                <div class="flex items-center gap-3">
+                    <span class="w-8 h-8 rounded-xl bg-crimson/20 text-crimson flex items-center justify-center font-bold text-sm">
+                        <i class="fa-solid fa-calendar-plus"></i>
+                    </span>
+                    <h3 class="font-outfit font-bold text-lg text-white">Online Randevu Oluşturma</h3>
+                </div>
+                <button onclick="closeBookingModal()" class="text-slate-400 hover:text-white text-xl">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <div class="px-6 py-4 bg-obsidian border-b border-slate-800/60 flex justify-between items-center">
+                <div class="flex items-center gap-2 step-indicator" id="step-ind-1">
+                    <div class="w-7 h-7 rounded-full bg-crimson text-white text-xs font-bold flex items-center justify-center shadow-crimson-glow">1</div>
+                    <span class="text-xs font-bold text-white hidden sm:inline">Hizmet Seçimi</span>
+                </div>
+                <div class="h-0.5 flex-1 mx-2 bg-slate-800"></div>
+                <div class="flex items-center gap-2 step-indicator opacity-40" id="step-ind-2">
+                    <div class="w-7 h-7 rounded-full bg-slate-800 text-slate-400 text-xs font-bold flex items-center justify-center">2</div>
+                    <span class="text-xs font-bold text-slate-400 hidden sm:inline">Tarih & Saat</span>
+                </div>
+                <div class="h-0.5 flex-1 mx-2 bg-slate-800"></div>
+                <div class="flex items-center gap-2 step-indicator opacity-40" id="step-ind-3">
+                    <div class="w-7 h-7 rounded-full bg-slate-800 text-slate-400 text-xs font-bold flex items-center justify-center">3</div>
+                    <span class="text-xs font-bold text-slate-400 hidden sm:inline">İletişim</span>
+                </div>
+            </div>
+
+            <div class="p-6 sm:p-8 max-h-[70vh] overflow-y-auto">
+                <div id="booking-step-1" class="space-y-6">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Araç Segmenti</label>
+                        <select id="modal-vehicle-select" class="w-full bg-obsidian border border-slate-700/80 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-crimson">
+                            <option value="Hatchback">Hatchback</option>
+                            <option value="Sedan" selected>Sedan</option>
+                            <option value="SUV / Crossover">SUV / Crossover</option>
+                            <option value="Spor / Exotic">Spor / Exotic</option>
+                            <option value="VIP Minibüs">VIP Minibüs</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Seçilen Ana Hizmet</label>
+                        <select id="modal-service-select" class="w-full bg-obsidian border border-slate-700/80 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-crimson">
+                            <option value="9H Seramik Kaplama" selected>9H Seramik Kaplama (₺8.500)</option>
+                            <option value="PPF Şeffaf Gövde Kaplama">PPF Şeffaf Gövde Kaplama (₺35.000)</option>
+                            <option value="Detaylı İç Sterilizasyon">Detaylı İç Sterilizasyon (₺2.800)</option>
+                            <option value="3 Aşama Polisaj & Cila">3 Aşama Polisaj & Cila (₺4.500)</option>
+                            <option value="Cam Filmi & Seramik Su İtici">Cam Filmi & Seramik Su İtici (₺3.200)</option>
+                            <option value="Motor Detaylandırma & Koruma">Motor Detaylandırma (₺1.500)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div id="booking-step-2" class="space-y-6 hidden">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Randevu Tarihi</label>
+                        <input type="date" id="booking-date-input" class="w-full bg-obsidian border border-slate-700/80 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-crimson">
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Saat Dilimi</label>
+                        <div class="grid grid-cols-3 gap-3" id="time-slot-picker">
+                            <button type="button" onclick="selectTimeSlot(this)" class="slot-btn p-3 rounded-xl border border-crimson bg-crimson/10 text-crimson font-bold text-xs">09:00</button>
+                            <button type="button" onclick="selectTimeSlot(this)" class="slot-btn p-3 rounded-xl border border-slate-800 bg-obsidian text-slate-300 font-bold text-xs hover:border-slate-700">11:00</button>
+                            <button type="button" onclick="selectTimeSlot(this)" class="slot-btn p-3 rounded-xl border border-slate-800 bg-obsidian text-slate-300 font-bold text-xs hover:border-slate-700">13:30</button>
+                            <button type="button" onclick="selectTimeSlot(this)" class="slot-btn p-3 rounded-xl border border-slate-800 bg-obsidian text-slate-300 font-bold text-xs hover:border-slate-700">15:30</button>
+                            <button type="button" onclick="selectTimeSlot(this)" class="slot-btn p-3 rounded-xl border border-slate-800 bg-obsidian text-slate-300 font-bold text-xs hover:border-slate-700">17:30</button>
+                            <button type="button" onclick="selectTimeSlot(this)" class="slot-btn p-3 rounded-xl border border-slate-800 bg-obsidian text-slate-300 font-bold text-xs hover:border-slate-700">19:00</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="booking-step-3" class="space-y-4 hidden">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Ad Soyad</label>
+                        <input type="text" id="cust-name" placeholder="Ahmet Yılmaz" class="w-full bg-obsidian border border-slate-700/80 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-crimson">
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Telefon Numarası</label>
+                        <input type="tel" id="cust-phone" placeholder="0532 000 00 00" class="w-full bg-obsidian border border-slate-700/80 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-crimson">
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Araç Plakası</label>
+                        <input type="text" id="cust-plate" placeholder="34 NRS 01" class="w-full bg-obsidian border border-slate-700/80 rounded-xl px-4 py-3 text-white font-mono font-bold tracking-wider uppercase focus:outline-none focus:border-crimson">
+                    </div>
+                </div>
+
+                <div id="booking-success" class="text-center py-6 hidden space-y-4">
+                    <div class="w-16 h-16 bg-emerald-500/20 text-emerald-400 rounded-full flex items-center justify-center mx-auto text-3xl animate-bounce">
+                        <i class="fa-solid fa-circle-check"></i>
+                    </div>
+                    <h4 class="font-outfit font-bold text-2xl text-white">Randevunuz Oluşturuldu!</h4>
+                    <p class="text-slate-400 text-sm max-w-sm mx-auto">Talebiniz ekibimize iletilmiştir. Plaka takip kodunuz: <span class="text-crimson font-mono font-bold" id="created-ref-code">#NC-2026</span></p>
+                    <div class="pt-4 flex justify-center gap-3">
+                        <button onclick="sendToWhatsApp()" class="px-6 py-3 rounded-xl bg-emerald-600 text-white font-bold text-xs flex items-center gap-2">
+                            <i class="fa-brands fa-whatsapp text-base"></i> WhatsApp Onay
+                        </button>
+                        <button onclick="closeBookingModal()" class="px-6 py-3 rounded-xl bg-slate-800 text-white font-bold text-xs">
+                            Kapat
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="booking-footer-btns" class="px-6 py-4 border-t border-slate-800 bg-darkPanel/50 flex justify-between items-center">
+                <button id="prev-step-btn" onclick="changeStep(-1)" class="px-5 py-2.5 rounded-xl bg-slate-800 text-slate-300 font-bold text-xs disabled:opacity-30">Geri</button>
+                <button id="next-step-btn" onclick="changeStep(1)" class="px-6 py-2.5 rounded-xl bg-crimson text-white font-bold text-xs shadow-crimson-glow hover:bg-red-600">Devam Et</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Live Status Tracker Modal -->
+    <div id="status-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-obsidian/85 backdrop-blur-md">
+        <div class="glass-panel max-w-lg w-full rounded-3xl border-slate-700 shadow-2xl p-6 sm:p-8 relative">
+            <button onclick="closeStatusModal()" class="absolute top-6 right-6 text-slate-400 hover:text-white text-xl">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="flex items-center gap-3 mb-6">
+                <div class="w-10 h-10 rounded-xl bg-crimson/10 border border-crimson/30 flex items-center justify-center text-crimson text-lg">
+                    <i class="fa-solid fa-car"></i>
+                </div>
+                <div>
+                    <h4 class="font-outfit font-bold text-lg text-white">NruS Creativ Stüdyo Takip</h4>
+                    <span class="text-xs text-slate-400" id="status-modal-plate">34 NRS 01</span>
+                </div>
+            </div>
+
+            <div class="space-y-6" id="tracker-step-content">
+                <div class="bg-obsidian p-4 rounded-xl border border-slate-800 flex justify-between items-center">
+                    <div>
+                        <div class="text-xs text-slate-400">Araç / Model</div>
+                        <div class="text-sm font-bold text-white" id="tracker-car-model">Porsche 911 GT3 RS</div>
+                    </div>
+                    <div class="text-right">
+                        <div class="text-xs text-slate-400">Tahmini Kalan Süre</div>
+                        <div class="text-xs font-bold text-crimson" id="tracker-est-time">45 Dakika</div>
+                    </div>
+                </div>
+
+                <div class="space-y-4 relative before:absolute before:top-3 before:bottom-3 before:left-3.5 before:w-0.5 before:bg-slate-800">
+                    <div class="flex items-start gap-4 relative z-10">
+                        <div class="w-7 h-7 rounded-full bg-emerald-500 text-obsidian text-xs font-bold flex items-center justify-center shrink-0">
+                            <i class="fa-solid fa-check"></i>
+                        </div>
+                        <div>
+                            <div class="text-sm font-bold text-white">Stüdyo Kabuk Arındırma & Yıkama</div>
+                            <div class="text-xs text-slate-400">09:30 - Ön ekspertiz ve pH nötr yıkama tamamlandı.</div>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start gap-4 relative z-10">
+                        <div class="w-7 h-7 rounded-full bg-emerald-500 text-obsidian text-xs font-bold flex items-center justify-center shrink-0">
+                            <i class="fa-solid fa-check"></i>
+                        </div>
+                        <div>
+                            <div class="text-sm font-bold text-white">3 Aşama Polisaj & Çizik Düzeltme</div>
+                            <div class="text-xs text-slate-400">11:15 - Ağır ve ince polisaj arındırması bitti.</div>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start gap-4 relative z-10">
+                        <div class="w-7 h-7 rounded-full bg-crimson text-white text-xs font-bold flex items-center justify-center shrink-0 animate-pulse shadow-crimson-glow">
+                            3
+                        </div>
+                        <div>
+                            <div class="text-sm font-bold text-crimson">9H Seramik Uygulama & Kürlenme</div>
+                            <div class="text-xs text-slate-300">İşlem Yapılıyor - IR ısı lambaları ile kürlenme gerçekleşiyor.</div>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start gap-4 relative z-10 opacity-40">
+                        <div class="w-7 h-7 rounded-full bg-slate-800 text-slate-400 text-xs font-bold flex items-center justify-center shrink-0">
+                            4
+                        </div>
+                        <div>
+                            <div class="text-sm font-bold text-slate-400">VIP Anahtar Teslimi</div>
+                            <div class="text-xs text-slate-500">Son kalite kontrol ve teslim.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Toast Notification System
+        function showToast(message) {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = `px-5 py-3 rounded-xl glass-panel border border-crimson/50 text-white text-xs font-bold shadow-crimson-glow flex items-center gap-3 transition-all duration-300 transform translate-y-5 opacity-0 pointer-events-auto`;
+            toast.innerHTML = `<i class="fa-solid fa-circle-info text-crimson"></i> ${message}`;
+            container.appendChild(toast);
+
+            setTimeout(() => {
+                toast.classList.remove('translate-y-5', 'opacity-0');
+            }, 10);
+
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'translate-y-2');
+                setTimeout(() => toast.remove(), 300);
+            }, 3500);
+        }
+
+        // Canvas Procedural Texture Generator for Ultra-Realistic Tire & Disc Details
+        function createTireTreadTexture() {
+            const canvas = document.createElement('canvas');
+            canvas.width = 1024;
+            canvas.height = 1024;
+            const ctx = canvas.getContext('2d');
+
+            // Matte Rubber Base Background
+            ctx.fillStyle = '#141416';
+            ctx.fillRect(0, 0, 1024, 1024);
+
+            // Grainy Rubber Texture Noise
+            for (let i = 0; i < 40000; i++) {
+                ctx.fillStyle = Math.random() > 0.5 ? '#1f1f23' : '#0a0a0c';
+                ctx.fillRect(Math.random() * 1024, Math.random() * 1024, 2, 2);
+            }
+
+            // Longitudinal Tread Grooves
+            ctx.strokeStyle = '#08080a';
+            ctx.lineWidth = 22;
+            ctx.lineCap = 'round';
+
+            const grooves = [250, 420, 600, 770];
+            grooves.forEach(x => {
+                ctx.beginPath();
+                ctx.moveTo(x, 0);
+                ctx.lineTo(x, 1024);
+                ctx.stroke();
+            });
+
+            // Directional V-Shaped Performance Tread Blocks
+            ctx.lineWidth = 14;
+            for (let y = 0; y < 1024; y += 70) {
+                ctx.beginPath();
+                ctx.moveTo(80, y);
+                ctx.lineTo(240, y + 50);
+                ctx.stroke();
+
+                ctx.beginPath();
+                ctx.moveTo(944, y);
+                ctx.lineTo(780, y + 50);
+                ctx.stroke();
+
+                ctx.beginPath();
+                ctx.moveTo(430, y + 20);
+                ctx.lineTo(590, y + 60);
+                ctx.stroke();
+            }
+
+            // Sidewall Branding Textures & Markings
+            ctx.fillStyle = '#555562';
+            ctx.font = 'bold 32px sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText("NRUS SPORT MAX  •  275/35 ZR20  •  EXTRA LOAD  •  RADIAL TUBELESS", 512, 110);
+            ctx.fillText("NRUS AUTOMOTIVE DETAILING STUDIO  •  PERFORMANCE TIRE", 512, 914);
+
+            const texture = new THREE.CanvasTexture(canvas);
+            texture.wrapS = THREE.RepeatWrapping;
+            texture.wrapT = THREE.RepeatWrapping;
+            return texture;
+        }
+
+        function createBrakeDiscTexture() {
+            const canvas = document.createElement('canvas');
+            canvas.width = 1024;
+            canvas.height = 1024;
+            const ctx = canvas.getContext('2d');
+
+            // Circular Brushed Steel Base
+            const grad = ctx.createRadialGradient(512, 512, 40, 512, 512, 500);
+            grad.addColorStop(0, '#3a3d42');
+            grad.addColorStop(0.4, '#a3a8b2');
+            grad.addColorStop(0.8, '#707580');
+            grad.addColorStop(1, '#25282d');
+            ctx.fillStyle = grad;
+            ctx.fillRect(0, 0, 1024, 1024);
+
+            // Micro Brushed Radial Rings
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.09)';
+            ctx.lineWidth = 1.5;
+            for (let r = 110; r < 490; r += 5) {
+                ctx.beginPath();
+                ctx.arc(512, 512, r, 0, Math.PI * 2);
+                ctx.stroke();
+            }
+
+            // Cross-Drilled Ventilation Holes
+            ctx.fillStyle = '#0f1013';
+            const holeRings = [180, 240, 300, 360, 420, 460];
+            holeRings.forEach((radius, ringIndex) => {
+                const count = 20 + ringIndex * 8;
+                for (let i = 0; i < count; i++) {
+                    const angle = (i / count) * Math.PI * 2 + (ringIndex * 0.15);
+                    const x = 512 + Math.cos(angle) * radius;
+                    const y = 512 + Math.sin(angle) * radius;
+                    ctx.beginPath();
+                    ctx.arc(x, y, 6.5, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+            });
+
+            const texture = new THREE.CanvasTexture(canvas);
+            return texture;
+        }
+
+        function createCaliperTexture() {
+            const canvas = document.createElement('canvas');
+            canvas.width = 512;
+            canvas.height = 256;
+            const ctx = canvas.getContext('2d');
+
+            ctx.fillStyle = '#ff003c';
+            ctx.fillRect(0, 0, 512, 256);
+
+            ctx.fillStyle = '#ffffff';
+            ctx.font = '900 60px "Outfit", sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText("NruS", 256, 115);
+            ctx.font = 'bold 24px "Plus Jakarta Sans", sans-serif';
+            ctx.fillText("PERFORMANCE", 256, 160);
+
+            return new THREE.CanvasTexture(canvas);
+        }
+
+        function createCenterCapTexture() {
+            const canvas = document.createElement('canvas');
+            canvas.width = 256;
+            canvas.height = 256;
+            const ctx = canvas.getContext('2d');
+
+            ctx.fillStyle = '#08080a';
+            ctx.fillRect(0, 0, 256, 256);
+
+            ctx.strokeStyle = '#ff003c';
+            ctx.lineWidth = 10;
+            ctx.beginPath();
+            ctx.arc(128, 128, 108, 0, Math.PI * 2);
+            ctx.stroke();
+
+            ctx.fillStyle = '#ffffff';
+            ctx.font = '900 80px "Outfit", sans-serif';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText("NC", 128, 128);
+
+            return new THREE.CanvasTexture(canvas);
+        }
+
+        let scene, camera, renderer, wheelGroup, particleSystem;
+
+        function initThreeJSWheel() {
+            const container = document.getElementById('hero-canvas-container');
+            scene = new THREE.Scene();
+
+            camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 0.1, 1000);
+            camera.position.set(0, 0, 7.8);
+
+            renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            renderer.toneMapping = THREE.ACESFilmicToneMapping;
+            renderer.toneMappingExposure = 1.2;
+            container.appendChild(renderer.domElement);
+
+            // Studio Lighting Setup
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
+            scene.add(ambientLight);
+
+            // Crimson Accent Light (Studio Red Glow)
+            const crimsonLight = new THREE.PointLight(0xff003c, 6, 40);
+            crimsonLight.position.set(5, 4, 6);
+            scene.add(crimsonLight);
+
+            // Cool White Rim Key Light
+            const keyLight = new THREE.DirectionalLight(0xffffff, 2.5);
+            keyLight.position.set(-5, 6, 8);
+            scene.add(keyLight);
+
+            // Back Fill Light
+            const backLight = new THREE.PointLight(0x3b82f6, 3, 30);
+            backLight.position.set(-6, -4, -4);
+            scene.add(backLight);
+
+            // Main Wheel Parent Group
+            wheelGroup = new THREE.Group();
+
+            // 1. TIRE (Rubber Body)
+            const tireTreadTexture = createTireTreadTexture();
+            const tireGeo = new THREE.TorusGeometry(2.35, 0.82, 48, 120);
+            const tireMat = new THREE.MeshStandardMaterial({
+                color: 0x18181c,
+                map: tireTreadTexture,
+                roughness: 0.82,
+                metalness: 0.1,
+                bumpMap: tireTreadTexture,
+                bumpScale: 0.08
+            });
+            const tireMesh = new THREE.Mesh(tireGeo, tireMat);
+            wheelGroup.add(tireMesh);
+
+            // 2. ALLOY RIM (Jant)
+            // Outer Rim Lip
+            const rimLipGeo = new THREE.TorusGeometry(2.32, 0.09, 24, 100);
+            const chromeMat = new THREE.MeshStandardMaterial({
+                color: 0xe2e8f0,
+                metalness: 0.95,
+                roughness: 0.12
+            });
+            const rimLipMesh = new THREE.Mesh(rimLipGeo, chromeMat);
+            rimLipMesh.position.z = 0.25;
+            wheelGroup.add(rimLipMesh);
+
+            // Rim Barrel
+            const barrelGeo = new THREE.CylinderGeometry(2.32, 2.32, 0.95, 64, 1, true);
+            const barrelMat = new THREE.MeshStandardMaterial({
+                color: 0x1e293b,
+                metalness: 0.8,
+                roughness: 0.3
+            });
+            const barrelMesh = new THREE.Mesh(barrelGeo, barrelMat);
+            barrelMesh.rotation.x = Math.PI / 2;
+            wheelGroup.add(barrelMesh);
+
+            // 5 Twin-Spokes Sports Alloy Rim
+            const spokeCount = 5;
+            const darkAlloyMat = new THREE.MeshStandardMaterial({
+                color: 0x27272a,
+                metalness: 0.9,
+                roughness: 0.2
+            });
+
+            for (let i = 0; i < spokeCount; i++) {
+                const angle = (i / spokeCount) * Math.PI * 2;
+                const spokePairGroup = new THREE.Group();
+                spokePairGroup.rotation.z = angle;
+
+                // Left Spoke Bar
+                const spokeGeo1 = new THREE.BoxGeometry(0.18, 1.85, 0.22);
+                const spokeMesh1 = new THREE.Mesh(spokeGeo1, darkAlloyMat);
+                spokeMesh1.position.set(-0.22, 1.15, 0.18);
+                spokeMesh1.rotation.z = -0.15;
+                spokePairGroup.add(spokeMesh1);
+
+                // Right Spoke Bar
+                const spokeMesh2 = new THREE.Mesh(spokeGeo1, darkAlloyMat);
+                spokeMesh2.position.set(0.22, 1.15, 0.18);
+                spokeMesh2.rotation.z = 0.15;
+                spokePairGroup.add(spokeMesh2);
+
+                wheelGroup.add(spokePairGroup);
+            }
+
+            // Center Hub Cap Assembly
+            const centerCapTexture = createCenterCapTexture();
+            const hubBaseGeo = new THREE.CylinderGeometry(0.65, 0.75, 0.3, 32);
+            const hubBaseMesh = new THREE.Mesh(hubBaseGeo, darkAlloyMat);
+            hubBaseMesh.rotation.x = Math.PI / 2;
+            hubBaseMesh.position.z = 0.15;
+            wheelGroup.add(hubBaseMesh);
+
+            const badgeGeo = new THREE.CylinderGeometry(0.48, 0.48, 0.05, 32);
+            const badgeMat = new THREE.MeshStandardMaterial({
+                map: centerCapTexture,
+                metalness: 0.5,
+                roughness: 0.2
+            });
+            const badgeMesh = new THREE.Mesh(badgeGeo, badgeMat);
+            badgeMesh.rotation.x = Math.PI / 2;
+            badgeMesh.position.z = 0.32;
+            wheelGroup.add(badgeMesh);
+
+            // Chrome Lug Nuts (5 Bijon Somunu)
+            for (let i = 0; i < 5; i++) {
+                const lugAngle = (i / 5) * Math.PI * 2;
+                const lugGeo = new THREE.CylinderGeometry(0.065, 0.065, 0.12, 6);
+                const lugMesh = new THREE.Mesh(lugGeo, chromeMat);
+                lugMesh.rotation.x = Math.PI / 2;
+                lugMesh.position.set(Math.cos(lugAngle) * 0.52, Math.sin(lugAngle) * 0.52, 0.28);
+                wheelGroup.add(lugMesh);
+            }
+
+            // 3. BRAKE DISC ROTOR (Behind Rim)
+            const brakeDiscTexture = createBrakeDiscTexture();
+            const discGeo = new THREE.CylinderGeometry(1.9, 1.9, 0.09, 64);
+            const discMat = new THREE.MeshStandardMaterial({
+                map: brakeDiscTexture,
+                metalness: 0.92,
+                roughness: 0.22
+            });
+            const discMesh = new THREE.Mesh(discGeo, discMat);
+            discMesh.rotation.x = Math.PI / 2;
+            discMesh.position.z = -0.22;
+            wheelGroup.add(discMesh);
+
+            // 4. RED NRUS BRAKE CALIPER
+            const caliperTexture = createCaliperTexture();
+            const caliperGeo = new THREE.BoxGeometry(0.75, 1.25, 0.45);
+            const caliperMat = new THREE.MeshStandardMaterial({
+                map: caliperTexture,
+                color: 0xff003c,
+                metalness: 0.3,
+                roughness: 0.2
+            });
+            const caliperMesh = new THREE.Mesh(caliperGeo, caliperMat);
+            caliperMesh.position.set(1.35, 0.95, -0.12);
+            caliperMesh.rotation.z = -0.4;
+            wheelGroup.add(caliperMesh);
+
+            // Initial Angle Angle Position
+            wheelGroup.rotation.y = -0.55;
+            wheelGroup.rotation.x = 0.2;
+            scene.add(wheelGroup);
+
+            // Atmospheric Floating Dust Particles
+            const particleCount = 1200;
+            const particleGeo = new THREE.BufferGeometry();
+            const positions = new Float32Array(particleCount * 3);
+
+            for (let i = 0; i < particleCount * 3; i += 3) {
+                positions[i] = (Math.random() - 0.5) * 18;
+                positions[i + 1] = (Math.random() - 0.5) * 18;
+                positions[i + 2] = (Math.random() - 0.5) * 12;
+            }
+
+            particleGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+            const particleMat = new THREE.PointsMaterial({
+                color: 0xff003c,
+                size: 0.04,
+                transparent: true,
+                opacity: 0.6
+            });
+
+            particleSystem = new THREE.Points(particleGeo, particleMat);
+            scene.add(particleSystem);
+
+            // Mouse Parallax Interaction
+            let mouseX = 0, mouseY = 0;
+            document.addEventListener('mousemove', (e) => {
+                mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
+                mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
+            });
+
+            // Render Animation Loop
+            function animate() {
+                requestAnimationFrame(animate);
+
+                // Continuous Realistic Wheel Spin
+                wheelGroup.rotation.z -= 0.012;
+
+                // Smooth Hovering Float
+                wheelGroup.position.y = Math.sin(Date.now() * 0.0015) * 0.15;
+
+                // Interactive Mouse Tilt Lerp
+                wheelGroup.rotation.y += (-0.55 + mouseX * 0.35 - wheelGroup.rotation.y) * 0.05;
+                wheelGroup.rotation.x += (0.2 - mouseY * 0.25 - wheelGroup.rotation.x) * 0.05;
+
+                particleSystem.rotation.y += 0.0006;
+
+                renderer.render(scene, camera);
+            }
+
+            animate();
+
+            // Responsive Viewport Resize
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            });
+        }
+
+        let currentMultiplier = 1.0;
+        let selectedVehicleName = "Hatchback";
+
+        function initCalculator() {
+            const vehicleBtns = document.querySelectorAll('.vehicle-btn');
+            const checkboxes = document.querySelectorAll('.service-checkbox');
+
+            vehicleBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    vehicleBtns.forEach(b => {
+                        b.classList.remove('border-crimson', 'bg-crimson/10', 'text-white');
+                        b.classList.add('border-slate-800', 'bg-obsidian', 'text-slate-400');
+                    });
+                    btn.classList.remove('border-slate-800', 'bg-obsidian', 'text-slate-400');
+                    btn.classList.add('border-crimson', 'bg-crimson/10', 'text-white');
+
+                    currentMultiplier = parseFloat(btn.getAttribute('data-multiplier'));
+                    selectedVehicleName = btn.getAttribute('data-name');
+                    recalculatePrice();
+                });
+            });
+
+            checkboxes.forEach(cb => cb.addEventListener('change', recalculatePrice));
+            recalculatePrice();
+        }
+
+        function recalculatePrice() {
+            const checkboxes = document.querySelectorAll('.service-checkbox:checked');
+            let baseTotal = 0;
+            let totalHours = 0;
+            const selectedServicesNames = [];
+
+            checkboxes.forEach(cb => {
+                baseTotal += parseFloat(cb.getAttribute('data-price'));
+                totalHours += parseFloat(cb.getAttribute('data-time'));
+                selectedServicesNames.push(cb.getAttribute('data-title'));
+            });
+
+            const finalPrice = Math.round(baseTotal * currentMultiplier);
+
+            document.getElementById('summary-vehicle-name').textContent = selectedVehicleName;
+            document.getElementById('summary-multiplier').textContent = `${currentMultiplier.toFixed(1)}x`;
+            document.getElementById('summary-estimated-time').textContent = totalHours >= 24 ? `${Math.round(totalHours/24)} Gün` : `${totalHours} Saat`;
+            document.getElementById('calculated-total-price').textContent = `₺${finalPrice.toLocaleString('tr-TR')}`;
+
+            const listContainer = document.getElementById('summary-services-list');
+            listContainer.innerHTML = selectedServicesNames.length > 0
+                ? selectedServicesNames.map(s => `<div class="flex items-center gap-1.5 text-slate-300"><i class="fa-solid fa-angle-right text-crimson text-[10px]"></i> ${s}</div>`).join('')
+                : '<div class="text-slate-500 italic">Hiçbir hizmet seçilmedi</div>';
+        }
+
+        function transferCalculatorToBooking() {
+            document.getElementById('modal-vehicle-select').value = selectedVehicleName;
+            openBookingModal();
+            showToast('Fiyat hesaplayıcı seçimleri randevu formuna yüklendi.');
+        }
+
+        let currentStep = 1;
+
+        function openBookingModal() {
+            document.getElementById('booking-modal').classList.remove('hidden');
+            setStep(1);
+        }
+
+        function closeBookingModal() {
+            document.getElementById('booking-modal').classList.add('hidden');
+        }
+
+        function selectPackageAndBook(packageName) {
+            document.getElementById('modal-service-select').value = packageName;
+            openBookingModal();
+        }
+
+        function setStep(step) {
+            currentStep = step;
+            document.getElementById('booking-step-1').classList.toggle('hidden', step !== 1);
+            document.getElementById('booking-step-2').classList.toggle('hidden', step !== 2);
+            document.getElementById('booking-step-3').classList.toggle('hidden', step !== 3);
+            document.getElementById('booking-success').classList.add('hidden');
+
+            document.getElementById('booking-footer-btns').classList.toggle('hidden', step === 4);
+            document.getElementById('prev-step-btn').disabled = step === 1;
+
+            for (let i = 1; i <= 3; i++) {
+                const ind = document.getElementById(`step-ind-${i}`);
+                if (i <= step) {
+                    ind.classList.remove('opacity-40');
+                } else {
+                    ind.classList.add('opacity-40');
+                }
+            }
+
+            if (step === 3) {
+                document.getElementById('next-step-btn').textContent = "Randevuyu Onayla";
+            } else {
+                document.getElementById('next-step-btn').textContent = "Devam Et";
+            }
+        }
+
+        function changeStep(delta) {
+            if (currentStep === 3 && delta === 1) {
+                const name = document.getElementById('cust-name').value;
+                const plate = document.getElementById('cust-plate').value;
+
+                if (!name || !plate) {
+                    showToast('Lütfen ad ve plaka alanlarını doldurun.');
+                    return;
+                }
+
+                currentStep = 4;
+                document.getElementById('booking-step-3').classList.add('hidden');
+                document.getElementById('booking-success').classList.remove('hidden');
+                document.getElementById('booking-footer-btns').classList.add('hidden');
+                document.getElementById('created-ref-code').textContent = `#NC-${Math.floor(1000 + Math.random() * 9000)}`;
+                showToast('Randevu kaydınız başarıyla alındı!');
+                return;
+            }
+
+            const nextStep = currentStep + delta;
+            if (nextStep >= 1 && nextStep <= 3) {
+                setStep(nextStep);
+            }
+        }
+
+        function selectTimeSlot(btn) {
+            document.querySelectorAll('.slot-btn').forEach(b => {
+                b.classList.remove('border-crimson', 'bg-crimson/10', 'text-crimson');
+                b.classList.add('border-slate-800', 'bg-obsidian', 'text-slate-300');
+            });
+            btn.classList.remove('border-slate-800', 'bg-obsidian', 'text-slate-300');
+            btn.classList.add('border-crimson', 'bg-crimson/10', 'text-crimson');
+        }
+
+        function sendToWhatsApp() {
+            const name = document.getElementById('cust-name').value || 'Müşteri';
+            const plate = document.getElementById('cust-plate').value || '34 NRS 01';
+            const service = document.getElementById('modal-service-select').value;
+            const text = `Merhaba NruS Creativ,%0A%0AOnline randevu oluşturmak istiyorum.%0AAd Soyad: ${name}%0APlaka: ${plate}%0AHizmet: ${service}`;
+            window.open(`https://wa.me/905320000000?text=${text}`, '_blank');
+        }
+
+        function openStatusModal(plateStr = '34 NRS 01') {
+            document.getElementById('status-modal-plate').textContent = plateStr.toUpperCase();
+            document.getElementById('status-modal').classList.remove('hidden');
+        }
+
+        function closeStatusModal() {
+            document.getElementById('status-modal').classList.add('hidden');
+        }
+
+        function searchPlateFromBanner() {
+            const val = document.getElementById('banner-plate-input').value.trim();
+            if (!val) {
+                showToast('Lütfen geçerli bir araç plakası girin.');
+                return;
+            }
+            openStatusModal(val);
+            showToast(`${val.toUpperCase()} plakalı aracın canlı stüdyo durumu çekildi.`);
+        }
+
+        window.onload = function () {
+            initThreeJSWheel();
+            initCalculator();
+
+            const tomorrow = new Date();
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            document.getElementById('booking-date-input').value = tomorrow.toISOString().split('T')[0];
+
+            const mobileBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+            mobileBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            document.querySelectorAll('.mobile-nav-link').forEach(link => {
+                link.addEventListener('click', () => mobileMenu.classList.add('hidden'));
+            });
+        };
+    </script>
+</body>
+</html>
