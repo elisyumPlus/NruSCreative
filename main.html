@@ -78,72 +78,71 @@
                 <!-- Kategori Filtre Butonları -->
                 <div class="flex flex-wrap gap-2 text-xs font-mono">
                     <button onclick="filterProjects('all')" class="filter-btn px-3 py-1 border border-white text-white transition-all">TÜMÜ</button>
-                    <button onclick="filterProjects('eticaret')" class="filter-btn px-3 py-1 border border-zinc-800 text-zinc-400 hover:border-white transition-all">E-TİCARET</button>
-                    <button onclick="filterProjects('kurumsal')" class="filter-btn px-3 py-1 border border-zinc-800 text-zinc-400 hover:border-white transition-all">KURUMSAL</button>
-                    <button onclick="filterProjects('saas')" class="filter-btn px-3 py-1 border border-zinc-800 text-zinc-400 hover:border-white transition-all">SAAS</button>
+                    <button onclick="filterProjects('hizmet')" class="filter-btn px-3 py-1 border border-zinc-800 text-zinc-400 hover:border-white transition-all">HİZMET</button>
+                    <button onclick="filterProjects('ticaret')" class="filter-btn px-3 py-1 border border-zinc-800 text-zinc-400 hover:border-white transition-all">TİCARET</button>
                 </div>
             </div>
             
             <div id="project-grid" class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 
                 <!-- Katalog Kart 1 -->
-                <div class="project-card border border-zinc-800 p-6 rounded-none hover:border-white transition-colors group bg-zinc-950/40 flex flex-col justify-between" data-category="eticaret">
+                <div class="project-card border border-zinc-800 p-6 rounded-none hover:border-white transition-colors group bg-zinc-950/40 flex flex-col justify-between" data-category="hizmet">
                     <div>
-                        <div class="text-xs text-zinc-500 mb-2 font-mono">01 // E-TİCARET</div>
-                        <h4 class="text-lg font-medium mb-2 group-hover:text-zinc-200">Minimalist Butik</h4>
-                        <p class="text-zinc-400 text-xs mb-6">Sade arayüzlü, hızlı yüklenen ve sorunsuz ödeme altyapısına sahip e-ticaret çözümü.</p>
+                        <div class="text-xs text-zinc-500 mb-2 font-mono">01 // HİZMET & GASTRONOMİ</div>
+                        <h4 class="text-lg font-medium mb-2 group-hover:text-zinc-200">Cafe & Restoran</h4>
+                        <p class="text-zinc-400 text-xs mb-6">QR menü entegrasyonlu, sıcak atmosferi yansıtan şık ve modern cafe web sitesi.</p>
                     </div>
-                    <a href="https://example.com/proje-1" target="_blank" class="text-xs text-white underline underline-offset-4 cursor-pointer inline-block">İncele →</a>
+                    <a href="https://example.com/cafe" target="_blank" class="text-xs text-white underline underline-offset-4 cursor-pointer inline-block">İncele →</a>
                 </div>
 
                 <!-- Katalog Kart 2 -->
-                <div class="project-card border border-zinc-800 p-6 rounded-none hover:border-white transition-colors group bg-zinc-950/40 flex flex-col justify-between" data-category="kurumsal">
+                <div class="project-card border border-zinc-800 p-6 rounded-none hover:border-white transition-colors group bg-zinc-950/40 flex flex-col justify-between" data-category="hizmet">
                     <div>
-                        <div class="text-xs text-zinc-500 mb-2 font-mono">02 // KURUMSAL</div>
-                        <h4 class="text-lg font-medium mb-2 group-hover:text-zinc-200">Global Ajans Vb.</h4>
-                        <p class="text-zinc-400 text-xs mb-6">Markanızın prestijini yansıtan, ağır grafiklerden arındırılmış keskin kurumsal site.</p>
+                        <div class="text-xs text-zinc-500 mb-2 font-mono">02 // OTOMOTİV</div>
+                        <h4 class="text-lg font-medium mb-2 group-hover:text-zinc-200">Oto Yıkama</h4>
+                        <p class="text-zinc-400 text-xs mb-6">Online randevu sistemi ve paket detayları barındıran profesyonel oto yıkama paneli.</p>
                     </div>
-                    <a href="https://example.com/proje-2" target="_blank" class="text-xs text-white underline underline-offset-4 cursor-pointer inline-block">İncele →</a>
+                    <a href="https://example.com/oto-yikama" target="_blank" class="text-xs text-white underline underline-offset-4 cursor-pointer inline-block">İncele →</a>
                 </div>
 
                 <!-- Katalog Kart 3 -->
-                <div class="project-card border border-zinc-800 p-6 rounded-none hover:border-white transition-colors group bg-zinc-950/40 flex flex-col justify-between" data-category="saas">
+                <div class="project-card border border-zinc-800 p-6 rounded-none hover:border-white transition-colors group bg-zinc-950/40 flex flex-col justify-between" data-category="hizmet">
                     <div>
-                        <div class="text-xs text-zinc-500 mb-2 font-mono">03 // SAAS / LANDING</div>
-                        <h4 class="text-lg font-medium mb-2 group-hover:text-zinc-200">Yazılım Vitrini</h4>
-                        <p class="text-zinc-400 text-xs mb-6">Yüksek dönüşüm oranına sahip, ürün odaklı modern tanıtım ve SaaS sayfaları.</p>
+                        <div class="text-xs text-zinc-500 mb-2 font-mono">03 // YAŞAM & ESTETİK</div>
+                        <h4 class="text-lg font-medium mb-2 group-hover:text-zinc-200">Güzellik Salonu</h4>
+                        <p class="text-zinc-400 text-xs mb-6">Hizmet listesi, kadro tanıtımı ve kolay randevu alma altyapısına sahip estetik web sitesi.</p>
                     </div>
-                    <a href="https://example.com/proje-3" target="_blank" class="text-xs text-white underline underline-offset-4 cursor-pointer inline-block">İncele →</a>
+                    <a href="https://example.com/guzellik-salonu" target="_blank" class="text-xs text-white underline underline-offset-4 cursor-pointer inline-block">İncele →</a>
                 </div>
 
                 <!-- Katalog Kart 4 -->
-                <div class="project-card border border-zinc-800 p-6 rounded-none hover:border-white transition-colors group bg-zinc-950/40 flex flex-col justify-between" data-category="eticaret">
+                <div class="project-card border border-zinc-800 p-6 rounded-none hover:border-white transition-colors group bg-zinc-950/40 flex flex-col justify-between" data-category="hizmet">
                     <div>
-                        <div class="text-xs text-zinc-500 mb-2 font-mono">04 // E-TİCARET</div>
-                        <h4 class="text-lg font-medium mb-2 group-hover:text-zinc-200">Lüks Saat & Aksesuar</h4>
-                        <p class="text-zinc-400 text-xs mb-6">Özel vitrin tasarımları ve akıllı sepet yapısıyla yüksek dönüşüm odaklı mağaza.</p>
+                        <div class="text-xs text-zinc-500 mb-2 font-mono">04 // KİŞİSEL BAKIM</div>
+                        <h4 class="text-lg font-medium mb-2 group-hover:text-zinc-200">Berber & Kuaför</h4>
+                        <p class="text-zinc-400 text-xs mb-6">Tarz sahibi berberler için modern galeri vitrini ve saat bazlı rezervasyon sistemi.</p>
                     </div>
-                    <a href="https://example.com/proje-4" target="_blank" class="text-xs text-white underline underline-offset-4 cursor-pointer inline-block">İncele →</a>
+                    <a href="https://example.com/berber" target="_blank" class="text-xs text-white underline underline-offset-4 cursor-pointer inline-block">İncele →</a>
                 </div>
 
                 <!-- Katalog Kart 5 -->
-                <div class="project-card border border-zinc-800 p-6 rounded-none hover:border-white transition-colors group bg-zinc-950/40 flex flex-col justify-between" data-category="kurumsal">
+                <div class="project-card border border-zinc-800 p-6 rounded-none hover:border-white transition-colors group bg-zinc-950/40 flex flex-col justify-between" data-category="ticaret">
                     <div>
-                        <div class="text-xs text-zinc-500 mb-2 font-mono">05 // KURUMSAL</div>
-                        <h4 class="text-lg font-medium mb-2 group-hover:text-zinc-200">Mimarlık & Tasarım</h4>
-                        <p class="text-zinc-400 text-xs mb-6">Geniş galeri alanları ve sade portfolyo yerleşimi ile mimari stüdyolar için web.</p>
+                        <div class="text-xs text-zinc-500 mb-2 font-mono">05 // E-TİCARET</div>
+                        <h4 class="text-lg font-medium mb-2 group-hover:text-zinc-200">Online Satış Sitesi</h4>
+                        <p class="text-zinc-400 text-xs mb-6">Gelişmiş sepet, ödeme entegrasyonu ve kolay yönetim panelli tam kapsamlı e-ticaret.</p>
                     </div>
-                    <a href="https://example.com/proje-5" target="_blank" class="text-xs text-white underline underline-offset-4 cursor-pointer inline-block">İncele →</a>
+                    <a href="https://example.com/online-satis" target="_blank" class="text-xs text-white underline underline-offset-4 cursor-pointer inline-block">İncele →</a>
                 </div>
 
                 <!-- Katalog Kart 6 -->
-                <div class="project-card border border-zinc-800 p-6 rounded-none hover:border-white transition-colors group bg-zinc-950/40 flex flex-col justify-between" data-category="saas">
+                <div class="project-card border border-zinc-800 p-6 rounded-none hover:border-white transition-colors group bg-zinc-950/40 flex flex-col justify-between" data-category="ticaret">
                     <div>
-                        <div class="text-xs text-zinc-500 mb-2 font-mono">06 // SAAS / LANDING</div>
-                        <h4 class="text-lg font-medium mb-2 group-hover:text-zinc-200">AI Yazılım Çözümü</h4>
-                        <p class="text-zinc-400 text-xs mb-6">Yapay zeka araçları için tasarlanmış karanlık temalı fütüristik tanıtım sayfası.</p>
+                        <div class="text-xs text-zinc-500 mb-2 font-mono">06 // ENDÜSTRİYEL</div>
+                        <h4 class="text-lg font-medium mb-2 group-hover:text-zinc-200">Kepenk Satış</h4>
+                        <p class="text-zinc-400 text-xs mb-6">Otomatik kepenk modelleri, ölçü hesaplama ve katalog sergileme odaklı kurumsal satış sitesi.</p>
                     </div>
-                    <a href="https://example.com/proje-6" target="_blank" class="text-xs text-white underline underline-offset-4 cursor-pointer inline-block">İncele →</a>
+                    <a href="https://example.com/kepenk-satis" target="_blank" class="text-xs text-white underline underline-offset-4 cursor-pointer inline-block">İncele →</a>
                 </div>
 
             </div>
@@ -153,10 +152,10 @@
         <section class="mb-24">
             <h3 class="text-xs uppercase tracking-[0.25em] text-zinc-500 mb-8 border-b border-zinc-900 pb-2">Partnerler</h3>
             <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-                <div class="border border-zinc-900 py-6 text-zinc-500 text-sm tracking-widest font-mono">PARTNER_01</div>
-                <div class="border border-zinc-900 py-6 text-zinc-500 text-sm tracking-widest font-mono">PARTNER_02</div>
-                <div class="border border-zinc-900 py-6 text-zinc-500 text-sm tracking-widest font-mono">PARTNER_03</div>
-                <div class="border border-zinc-900 py-6 text-zinc-500 text-sm tracking-widest font-mono">PARTNER_04</div>
+                <div class="border border-zinc-900 py-6 text-zinc-400 text-xs tracking-widest font-mono">TOR MEDIA</div>
+                <div class="border border-zinc-900 py-6 text-zinc-400 text-xs tracking-widest font-mono">BHE GROUP</div>
+                <div class="border border-zinc-900 py-6 text-yellow-500/80 text-xs tracking-widest font-mono font-medium">NOVA CREATIVE</div>
+                <div class="border border-zinc-900 py-6 text-zinc-400 text-xs tracking-widest font-mono">VISION GATE</div>
             </div>
         </section>
 
