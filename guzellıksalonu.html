@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="tr" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NruS Creativ Güzellik Salonu & Spa</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        salonGreen: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            600: '#16a34a',
+                            700: '#15803d',
+                            800: '#166534',
+                            900: '#14532d',
+                            deep: '#0d2818'
+                        },
+                        salonGold: {
+                            light: '#fef3c7',
+                            DEFAULT: '#eab308',
+                            warm: '#d97706',
+                            accent: '#facc15'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-salonGreen-50 text-gray-800 antialiased selection:bg-salonGold selection:text-salonGreen-deep">
+
+    <!-- Header / Navbar -->
+    <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md shadow-sm border-b border-salonGreen-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo -->
+                <div class="flex items-center space-x-2">
+                    <div class="w-10 h-10 rounded-full bg-salonGreen-800 flex items-center justify-center text-salonGold-accent font-bold text-xl shadow-md">
+                        <i class="fa-solid fa-spa"></i>
+                    </div>
+                    <span class="text-xl sm:text-2xl font-bold tracking-wider text-salonGreen-900">NRUS <span class="text-salonGold-warm font-normal">CREATIV</span></span>
+                </div>
+
+                <!-- Desktop Nav Links -->
+                <nav class="hidden md:flex items-center space-x-8 font-medium text-salonGreen-900">
+                    <a href="#anasayfa" class="hover:text-salonGold-warm transition-colors">Ana Sayfa</a>
+                    <a href="#hizmetler" class="hover:text-salonGold-warm transition-colors">Hizmetler</a>
+                    <a href="#hakkimizda" class="hover:text-salonGold-warm transition-colors">Hakkımızda</a>
+                    <a href="#yorumlar" class="hover:text-salonGold-warm transition-colors">Yorumlar</a>
+                    <a href="#iletisim" class="hover:text-salonGold-warm transition-colors">İletişim</a>
+                </nav>
+
+                <!-- CTA Button -->
+                <div class="hidden md:block">
+                    <a href="#randevu" class="bg-salonGreen-800 text-salonGold-light px-5 py-2.5 rounded-full font-semibold shadow-lg hover:bg-salonGreen-900 hover:shadow-xl transition-all duration-300 border border-salonGold/30">
+                        Randevu Al <i class="fa-solid fa-calendar-days ml-1"></i>
+                    </a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden flex items-center">
+                    <button id="menu-btn" class="text-salonGreen-900 focus:outline-none p-2">
+                        <i class="fa-solid fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Dropdown -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-b border-salonGreen-100 px-4 pt-2 pb-6 space-y-3 shadow-lg">
+            <a href="#anasayfa" class="block text-salonGreen-900 font-medium py-2 hover:bg-salonGreen-50 rounded px-2">Ana Sayfa</a>
+            <a href="#hizmetler" class="block text-salonGreen-900 font-medium py-2 hover:bg-salonGreen-50 rounded px-2">Hizmetler</a>
+            <a href="#hakkimizda" class="block text-salonGreen-900 font-medium py-2 hover:bg-salonGreen-50 rounded px-2">Hakkımızda</a>
+            <a href="#yorumlar" class="block text-salonGreen-900 font-medium py-2 hover:bg-salonGreen-50 rounded px-2">Yorumlar</a>
+            <a href="#iletisim" class="block text-salonGreen-900 font-medium py-2 hover:bg-salonGreen-50 rounded px-2">İletişim</a>
+            <a href="#randevu" class="block text-center bg-salonGreen-800 text-salonGold-light py-2.5 rounded-xl font-semibold shadow">Randevu Al</a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="anasayfa" class="relative bg-gradient-to-br from-salonGreen-900 via-salonGreen-800 to-salonGreen-deep text-white py-24 lg:py-32 overflow-hidden">
+        <!-- Decorative elements -->
+        <div class="absolute -right-20 -top-20 w-96 h-96 rounded-full bg-salonGold/10 blur-3xl pointer-events-none"></div>
+        <div class="absolute -left-20 -bottom-20 w-96 h-96 rounded-full bg-salonGreen-600/20 blur-3xl pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div class="space-y-6 text-center lg:text-left">
+                    <span class="inline-flex items-center space-x-2 bg-salonGold/20 text-salonGold-light px-4 py-1.5 rounded-full text-sm font-medium border border-salonGold/30">
+                        <i class="fa-solid fa-sparkles"></i> <span>NruS Creativ Güzellik Salonu</span>
+                    </span>
+                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-tight">
+                        Kendinizi Doğanın ve <span class="text-salonGold-accent">Zarafetin</span> Akışına Bırakın
+                    </h1>
+                    <p class="text-lg text-gray-200 max-w-xl mx-auto lg:mx-0">
+                        NruS Creativ; en son teknolojiler, uzman kadro ve doğal içerikli bakım ürünleriyle size özel yenilenme deneyimi sunuyor.
+                    </p>
+                    <div class="flex flex-col sm:flex-row justify-center lg:justify-start gap-4 pt-4">
+                        <a href="#randevu" class="bg-salonGold text-salonGreen-deep font-bold px-8 py-4 rounded-xl shadow-lg hover:bg-salonGold-accent transition transform hover:-translate-y-0.5 text-center">
+                            Hemen Randevu Oluştur
+                        </a>
+                        <a href="#hizmetler" class="bg-white/10 hover:bg-white/20 text-white font-semibold px-8 py-4 rounded-xl backdrop-blur-sm border border-white/20 transition text-center">
+                            Hizmetlerimizi İncele
+                        </a>
+                    </div>
+                </div>
+                <!-- Hero Image Grid -->
+                <div class="relative flex justify-center">
+                    <div class="relative w-full max-w-md lg:max-w-none h-[400px] sm:h-[450px] rounded-3xl overflow-hidden shadow-2xl border-4 border-salonGold/30">
+                        <img src="https://placehold.co/600x700/14532d/fef3c7?text=NruS+Creativ" alt="Güzellik Salonu" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/600x700/166534/ffffff?text=Salon+Gorseli'">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent flex items-end p-6">
+                            <div class="bg-white/90 backdrop-blur-md p-4 rounded-2xl w-full text-salonGreen-900 shadow-lg flex items-center justify-between">
+                                <div>
+                                    <p class="text-xs font-bold uppercase tracking-wider text-salonGold-warm">Özel Kampanya</p>
+                                    <p class="text-sm font-semibold">İlk Cilt Bakımında %20 İndirim!</p>
+                                </div>
+                                <span class="bg-salonGreen-800 text-white text-xs px-3 py-1.5 rounded-lg font-bold">Kaçırma</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="hizmetler" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-salonGold-warm font-bold tracking-widest uppercase text-sm">Profesyonel Dokunuşlar</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-salonGreen-900 mt-2">NruS Creativ Bakım Hizmetleri</h2>
+                <div class="w-24 h-1 bg-salonGold mx-auto mt-4 rounded-full"></div>
+                <p class="text-gray-600 mt-4">İhtiyacınıza uygun yenilikçi estetik ve bakım çözümlerimizle kendinizi şımartın.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Service 1 -->
+                <div class="bg-salonGreen-50 rounded-2xl p-8 border border-salonGreen-100 hover:shadow-xl transition-all duration-300 group hover:-translate-y-1">
+                    <div class="w-14 h-14 bg-salonGreen-800 rounded-xl flex items-center justify-center text-salonGold-accent text-2xl mb-6 shadow-md group-hover:bg-salonGold group-hover:text-salonGreen-deep transition-colors">
+                        <i class="fa-solid fa-face-smile"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-salonGreen-900 mb-3">Lüks Cilt Bakımı</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed mb-6">
+                        Derinlemesine temizlik, peeling, nemlendirici maskeler ve özel serum uygulamalarıyla cildinize ışıltı katın.
+                    </p>
+                    <div class="flex items-center justify-between pt-4 border-t border-salonGreen-100">
+                        <span class="text-salonGreen-800 font-extrabold">₺750</span>
+                        <a href="#randevu" class="text-sm font-semibold text-salonGold-warm hover:text-salonGreen-900 flex items-center gap-1">
+                            Randevu Al <i class="fa-solid fa-arrow-right text-xs"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Service 2 -->
+                <div class="bg-salonGreen-50 rounded-2xl p-8 border border-salonGreen-100 hover:shadow-xl transition-all duration-300 group hover:-translate-y-1">
+                    <div class="w-14 h-14 bg-salonGreen-800 rounded-xl flex items-center justify-center text-salonGold-accent text-2xl mb-6 shadow-md group-hover:bg-salonGold group-hover:text-salonGreen-deep transition-colors">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-salonGreen-900 mb-3">Lazer Epilasyon</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed mb-6">
+                        Son teknoloji buz başlıklı cihazlar ile acısız, konforlu ve kalıcı pürüzsüzlük deneyimi yaşayın.
+                    </p>
+                    <div class="flex items-center justify-between pt-4 border-t border-salonGreen-100">
+                        <span class="text-salonGreen-800 font-extrabold">Seans Başı ₺500'den</span>
+                        <a href="#randevu" class="text-sm font-semibold text-salonGold-warm hover:text-salonGreen-900 flex items-center gap-1">
+                            Randevu Al <i class="fa-solid fa-arrow-right text-xs"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Service 3 -->
+                <div class="bg-salonGreen-50 rounded-2xl p-8 border border-salonGreen-100 hover:shadow-xl transition-all duration-300 group hover:-translate-y-1">
+                    <div class="w-14 h-14 bg-salonGreen-800 rounded-xl flex items-center justify-center text-salonGold-accent text-2xl mb-6 shadow-md group-hover:bg-salonGold group-hover:text-salonGreen-deep transition-colors">
+                        <i class="fa-solid fa-hand-sparkles"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-salonGreen-900 mb-3">Kalıcı Oje & Nail Art</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed mb-6">
+                        Ellerinizin ve ayaklarınızın bakımı için en trend renkler, profesyonel manikür, pedikür ve kalıcı oje uygulamaları.
+                    </p>
+                    <div class="flex items-center justify-between pt-4 border-t border-salonGreen-100">
+                        <span class="text-salonGreen-800 font-extrabold">₺400</span>
+                        <a href="#randevu" class="text-sm font-semibold text-salonGold-warm hover:text-salonGreen-900 flex items-center gap-1">
+                            Randevu Al <i class="fa-solid fa-arrow-right text-xs"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Service 4 -->
+                <div class="bg-salonGreen-50 rounded-2xl p-8 border border-salonGreen-100 hover:shadow-xl transition-all duration-300 group hover:-translate-y-1">
+                    <div class="w-14 h-14 bg-salonGreen-800 rounded-xl flex items-center justify-center text-salonGold-accent text-2xl mb-6 shadow-md group-hover:bg-salonGold group-hover:text-salonGreen-deep transition-colors">
+                        <i class="fa-solid fa-scissors"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-salonGreen-900 mb-3">Saç Tasarımı & Bakım</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed mb-6">
+                        Tarzınıza en uygun kesim, boya, röfle ve saçınıza yeniden canlılık kazandıran keratin bakım terapileri.
+                    </p>
+                    <div class="flex items-center justify-between pt-4 border-t border-salonGreen-100">
+                        <span class="text-salonGreen-800 font-extrabold">₺600'den</span>
+                        <a href="#randevu" class="text-sm font-semibold text-salonGold-warm hover:text-salonGreen-900 flex items-center gap-1">
+                            Randevu Al <i class="fa-solid fa-arrow-right text-xs"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Service 5 -->
+                <div class="bg-salonGreen-50 rounded-2xl p-8 border border-salonGreen-100 hover:shadow-xl transition-all duration-300 group hover:-translate-y-1">
+                    <div class="w-14 h-14 bg-salonGreen-800 rounded-xl flex items-center justify-center text-salonGold-accent text-2xl mb-6 shadow-md group-hover:bg-salonGold group-hover:text-salonGreen-deep transition-colors">
+                        <i class="fa-solid fa-feather"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-salonGreen-900 mb-3">İpek Kirpik & Laminasyon</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed mb-6">
+                        Bakışlarınıza anlam katan doğal görünümlü ipek kirpik uygulamaları ile kaş ve kirpik laminasyon hizmetleri.
+                    </p>
+                    <div class="flex items-center justify-between pt-4 border-t border-salonGreen-100">
+                        <span class="text-salonGreen-800 font-extrabold">₺650</span>
+                        <a href="#randevu" class="text-sm font-semibold text-salonGold-warm hover:text-salonGreen-900 flex items-center gap-1">
+                            Randevu Al <i class="fa-solid fa-arrow-right text-xs"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Service 6 -->
+                <div class="bg-salonGreen-50 rounded-2xl p-8 border border-salonGreen-100 hover:shadow-xl transition-all duration-300 group hover:-translate-y-1">
+                    <div class="w-14 h-14 bg-salonGreen-800 rounded-xl flex items-center justify-center text-salonGold-accent text-2xl mb-6 shadow-md group-hover:bg-salonGold group-hover:text-salonGreen-deep transition-colors">
+                        <i class="fa-solid fa-spa"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-salonGreen-900 mb-3">Vücut Masajı & Spa</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed mb-6">
+                        Günün stresinden uzaklaşmanızı sağlayacak aromaterapi ve dinlendirici özel vücut masaj paketleri.
+                    </p>
+                    <div class="flex items-center justify-between pt-4 border-t border-salonGreen-100">
+                        <span class="text-salonGreen-800 font-extrabold">₺900</span>
+                        <a href="#randevu" class="text-sm font-semibold text-salonGold-warm hover:text-salonGreen-900 flex items-center gap-1">
+                            Randevu Al <i class="fa-solid fa-arrow-right text-xs"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="hakkimizda" class="py-20 bg-salonGreen-50 border-t border-salonGreen-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div class="relative">
+                    <div class="relative z-10 rounded-3xl overflow-hidden shadow-2xl border-4 border-white">
+                        <img src="https://placehold.co/600x500/166534/fef3c7?text=NruS+Creativ+Salon" alt="Salon Hakkında" class="w-full h-auto object-cover" onerror="this.src='https://placehold.co/600x500/14532d/ffffff?text=NruS+Ekip'">
+                    </div>
+                    <!-- Badge -->
+                    <div class="absolute -bottom-6 -right-6 z-20 bg-salonGold text-salonGreen-deep p-6 rounded-2xl shadow-xl hidden sm:flex items-center space-x-4 border-2 border-white">
+                        <span class="text-4xl font-black">10+</span>
+                        <div class="text-xs font-bold uppercase tracking-wider leading-tight">Yıllık Profesyonel<br>Deneyim</div>
+                    </div>
+                </div>
+
+                <div class="space-y-6">
+                    <span class="text-salonGold-warm font-bold tracking-widest uppercase text-sm">Biz Kimiz?</span>
+                    <h2 class="text-3xl sm:text-4xl font-extrabold text-salonGreen-900">
+                        Güzelliğinizi NruS Creativ Güvencesiyle Keşfedin
+                    </h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        NruS Creativ Güzellik Salonu olarak; hijyenik ortamımız, son teknoloji cihazlarımız ve sertifikalı profesyonel kadromuzla her misafirimize kişiye özel çözümler sunuyoruz. Doğal güzelliğinizi ön plana çıkarırken ruhsal olarak da dinlenebileceğiniz huzurlu bir atmosfer tasarladık.
+                    </p>
+                    <div class="grid grid-cols-2 gap-6 pt-2">
+                        <div class="flex items-start space-x-3">
+                            <div class="w-8 h-8 rounded-full bg-salonGreen-800 text-salonGold-accent flex items-center justify-center shrink-0 mt-1">
+                                <i class="fa-solid fa-check text-xs"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-salonGreen-900">Doğal Ürünler</h4>
+                                <p class="text-xs text-gray-600">Cildinize dost, organik içerikli ürün seçkisi.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-3">
+                            <div class="w-8 h-8 rounded-full bg-salonGreen-800 text-salonGold-accent flex items-center justify-center shrink-0 mt-1">
+                                <i class="fa-solid fa-check text-xs"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-salonGreen-900">Uzman Ekip</h4>
+                                <p class="text-xs text-gray-600">Alanında uzman, sertifikalı estetisyenler.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pt-4">
+                        <a href="#randevu" class="inline-block bg-salonGreen-800 text-salonGold-light px-8 py-3.5 rounded-xl font-semibold shadow-md hover:bg-salonGreen-900 transition">
+                            Bizimle Tanışın
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials / Yorumlar -->
+    <section id="yorumlar" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-salonGold-warm font-bold tracking-widest uppercase text-sm">Mutlu Müşteriler</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-salonGreen-900 mt-2">NruS Creativ Ziyaretçi Yorumları</h2>
+                <div class="w-24 h-1 bg-salonGold mx-auto mt-4 rounded-full"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Review 1 -->
+                <div class="bg-salonGreen-50/50 border border-salonGreen-100 p-8 rounded-2xl shadow-sm relative flex flex-col justify-between">
+                    <div>
+                        <div class="flex text-salonGold-warm mb-4 space-x-1 text-sm">
+                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                        </div>
+                        <p class="text-gray-700 italic text-sm leading-relaxed mb-6">
+                            "Cilt bakımı için ilk defa geldim ve sonuç inanılmaz derecede ferahlatıcıydı. NruS Creativ ekibinin güleryüzü ve salonun hijyeni harika."
+                        </p>
+                    </div>
+                    <div class="flex items-center space-x-3 pt-4 border-t border-salonGreen-100">
+                        <div class="w-10 h-10 rounded-full bg-salonGreen-800 text-salonGold-light font-bold flex items-center justify-center">A</div>
+                        <div>
+                            <h4 class="font-bold text-sm text-salonGreen-900">Ayşe Yılmaz</h4>
+                            <p class="text-xs text-gray-500">Cilt Bakımı Müşterisi</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Review 2 -->
+                <div class="bg-salonGreen-50/50 border border-salonGreen-100 p-8 rounded-2xl shadow-sm relative flex flex-col justify-between">
+                    <div>
+                        <div class="flex text-salonGold-warm mb-4 space-x-1 text-sm">
+                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                        </div>
+                        <p class="text-gray-700 italic text-sm leading-relaxed mb-6">
+                            "Lazer epilasyon seanslarımda çok kısa sürede mükemmel sonuç aldım. Tamamen acısız ve profesyonel bir süreçti, herkese tavsiye ederim."
+                        </p>
+                    </div>
+                    <div class="flex items-center space-x-3 pt-4 border-t border-salonGreen-100">
+                        <div class="w-10 h-10 rounded-full bg-salonGreen-800 text-salonGold-light font-bold flex items-center justify-center">E</div>
+                        <div>
+                            <h4 class="font-bold text-sm text-salonGreen-900">Elif Demir</h4>
+                            <p class="text-xs text-gray-500">Lazer Epilasyon Müşterisi</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Review 3 -->
+                <div class="bg-salonGreen-50/50 border border-salonGreen-100 p-8 rounded-2xl shadow-sm relative flex flex-col justify-between">
+                    <div>
+                        <div class="flex text-salonGold-warm mb-4 space-x-1 text-sm">
+                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                        </div>
+                        <p class="text-gray-700 italic text-sm leading-relaxed mb-6">
+                            "Kalıcı oje ve nail art için şehrin en iyisi diyebilirim. Ellerimdeki titizlik ve zarif detaylar beni benden aldı. Teşekkürler NruS Creativ!"
+                        </p>
+                    </div>
+                    <div class="flex items-center space-x-3 pt-4 border-t border-salonGreen-100">
+                        <div class="w-10 h-10 rounded-full bg-salonGreen-800 text-salonGold-light font-bold flex items-center justify-center">Z</div>
+                        <div>
+                            <h4 class="font-bold text-sm text-salonGreen-900">Zeynep Kaya</h4>
+                            <p class="text-xs text-gray-500">Nail Art Müşterisi</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Appointment / Randevu Section -->
+    <section id="randevu" class="py-20 bg-gradient-to-tr from-salonGreen-900 to-salonGreen-deep text-white relative">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center mb-12">
+                <span class="text-salonGold-accent font-bold tracking-widest uppercase text-sm">Hemen Planla</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold mt-2">NruS Creativ Randevu Talep Formu</h2>
+                <div class="w-24 h-1 bg-salonGold mx-auto mt-4 rounded-full"></div>
+                <p class="text-gray-200 mt-4 max-w-xl mx-auto">Bilgilerinizi doldurun, sizin için en uygun saatte dönüş yapıp randevunuzu kesinleştirelim.</p>
+            </div>
+
+            <div class="bg-white text-gray-800 rounded-3xl p-8 sm:p-12 shadow-2xl border-2 border-salonGold/30">
+                <form id="appointment-form" onsubmit="handleAppointment(event)" class="space-y-6">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-semibold text-salonGreen-900 mb-2">Adınız Soyadınız</label>
+                            <input type="text" id="name" required class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-salonGreen-600 bg-salonGreen-50/50" placeholder="Örn: Merve Çelik">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-salonGreen-900 mb-2">Telefon Numarası</label>
+                            <input type="tel" id="phone" required class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-salonGreen-600 bg-salonGreen-50/50" placeholder="0532 000 00 00">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-semibold text-salonGreen-900 mb-2">Hizmet Seçiniz</label>
+                            <select id="service" required class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-salonGreen-600 bg-salonGreen-50/50">
+                                <option value="">Hizmet Seçiniz...</option>
+                                <option value="Cilt Bakımı">Lüks Cilt Bakımı</option>
+                                <option value="Lazer Epilasyon">Lazer Epilasyon</option>
+                                <option value="Kalıcı Oje">Kalıcı Oje & Nail Art</option>
+                                <option value="Saç Tasarımı">Saç Tasarımı & Bakım</option>
+                                <option value="İpek Kirpik">İpek Kirpik & Laminasyon</option>
+                                <option value="Masaj & Spa">Vücut Masajı & Spa</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-salonGreen-900 mb-2">İstediğiniz Tarih</label>
+                            <input type="date" id="date" required class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-salonGreen-600 bg-salonGreen-50/50">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-semibold text-salonGreen-900 mb-2">Ek Notlar / İstekler</label>
+                        <textarea id="notes" rows="3" class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-salonGreen-600 bg-salonGreen-50/50" placeholder="Varsa özel isteklerinizi belirtebilirsiniz..."></textarea>
+                    </div>
+
+                    <button type="submit" class="w-full py-4 bg-salonGreen-800 text-salonGold-light font-bold rounded-xl shadow-lg hover:bg-salonGreen-900 transition duration-300 text-lg border border-salonGold/30">
+                        Randevu Talebi Gönder
+                    </button>
+                </form>
+
+                <!-- Success Box (Hidden by default) -->
+                <div id="success-box" class="hidden mt-6 p-6 bg-salonGreen-100 border border-salonGreen-600 text-salonGreen-900 rounded-xl text-center space-y-2">
+                    <i class="fa-solid fa-circle-check text-3xl text-salonGreen-700"></i>
+                    <h3 class="font-bold text-lg">Randevu Talebiniz Alındı!</h3>
+                    <p class="text-sm text-gray-700">En kısa sürede sizinle iletişime geçerek randevu saatini kesinleştireceğiz.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer & Contact Section -->
+    <footer id="iletisim" class="bg-salonGreen-deep text-white pt-16 pb-12 border-t border-salonGreen-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-10 mb-12">
+                <!-- Info Column -->
+                <div class="space-y-4">
+                    <div class="flex items-center space-x-2">
+                        <div class="w-8 h-8 rounded-full bg-salonGold text-salonGreen-deep flex items-center justify-center font-bold">
+                            <i class="fa-solid fa-spa"></i>
+                        </div>
+                        <span class="text-xl font-bold tracking-wider">NRUS <span class="text-salonGold-accent font-normal">CREATIV</span></span>
+                    </div>
+                    <p class="text-gray-300 text-sm leading-relaxed">
+                        Doğallığın zarafetle buluştuğu nokta. Size özel bakım paketlerimizle kendinizi yeniden keşfedin.
+                    </p>
+                    <div class="flex space-x-4 pt-2">
+                        <a href="#" class="w-10 h-10 rounded-full bg-salonGreen-800 flex items-center justify-center text-salonGold-accent hover:bg-salonGold hover:text-salonGreen-deep transition"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-salonGreen-800 flex items-center justify-center text-salonGold-accent hover:bg-salonGold hover:text-salonGreen-deep transition"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-salonGreen-800 flex items-center justify-center text-salonGold-accent hover:bg-salonGold hover:text-salonGreen-deep transition"><i class="fa-brands fa-whatsapp"></i></a>
+                    </div>
+                </div>
+
+                <!-- Contact Details -->
+                <div class="space-y-4">
+                    <h3 class="text-lg font-bold text-salonGold-accent">İletişim Bilgileri</h3>
+                    <ul class="space-y-3 text-sm text-gray-300">
+                        <li class="flex items-start space-x-3">
+                            <i class="fa-solid fa-location-dot mt-1 text-salonGold"></i>
+                            <span>Bağdat Caddesi No: 142/B, Kadıköy / İstanbul</span>
+                        </li>
+                        <li class="flex items-center space-x-3">
+                            <i class="fa-solid fa-phone text-salonGold"></i>
+                            <span>+90 (216) 555 01 44</span>
+                        </li>
+                        <li class="flex items-center space-x-3">
+                            <i class="fa-solid fa-envelope text-salonGold"></i>
+                            <span>bilgi@nruscreativ.com</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Working Hours -->
+                <div class="space-y-4">
+                    <h3 class="text-lg font-bold text-salonGold-accent">Çalışma Saatleri</h3>
+                    <ul class="space-y-2 text-sm text-gray-300">
+                        <li class="flex justify-between border-b border-salonGreen-800 pb-2">
+                            <span>Pazartesi - Cumartesi:</span>
+                            <span class="font-semibold text-white">09:00 - 20:00</span>
+                        </li>
+                        <li class="flex justify-between border-b border-salonGreen-800 pb-2">
+                            <span>Pazar:</span>
+                            <span class="font-semibold text-salonGold-light">10:00 - 18:00</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-t border-salonGreen-800 pt-8 text-center text-xs text-gray-400">
+                <p>&copy; 2026 NruS Creativ Güzellik Salonu. Tüm hakları saklıdır. Tasarım: Yeşil & Altın Zarafet Teması.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Interaction Logic -->
+    <script>
+// ... existing code ... -->
+    </script>
+
+    <!-- Floating Sample Design Banner -->
+    <div class="fixed bottom-6 right-6 z-50 bg-salonGold text-salonGreen-deep px-4 py-2 rounded-full shadow-2xl border-2 border-white font-bold text-xs sm:text-sm tracking-wide flex items-center space-x-2 animate-bounce">
+        <i class="fa-solid fa-code"></i>
+        <span>Örnek Tasarımdır</span>
+    </div>
+</body>
+</html>
