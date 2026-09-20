@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NruS Creativ | Öğrenciler İçin Ücretsiz Web Sitesi Başvurusu</title>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+        
+        /* Kaydırma çubuğunu gizleme */
+        html {
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        html::-webkit-scrollbar,
+        body::-webkit-scrollbar {
+            display: none;
+            width: 0px;
+            background: transparent;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #000000;
+            color: #ffffff;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            overflow-y: scroll;
+        }
+
+        .font-mono {
+            font-family: 'JetBrains Mono', monospace;
+        }
+    </style>
+</head>
+<body class="bg-black text-white min-h-screen m-0 p-0 selection:bg-white selection:text-black">
+
+    <!-- Ana Konteyner -->
+    <main class="max-w-4xl mx-auto px-6 py-12">
+        
+        <!-- Üst Marka & Navigasyon -->
+        <header class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-zinc-800 pb-6 mb-12 gap-4">
+            <div>
+                <a href="index.html" class="text-xl font-light tracking-[0.2em] uppercase hover:text-zinc-300 transition-colors">NruS Creativ</a>
+                <div class="text-[10px] text-zinc-500 font-mono tracking-widest uppercase mt-1">ÖĞRENCİ DESTEK PROGRAMI // %100 ÜCRETSİZ</div>
+            </div>
+            <a href="index.html" class="text-xs font-mono border border-zinc-800 px-4 py-2 text-zinc-400 hover:text-white hover:border-white transition-all uppercase">
+                ← Ana Sayfaya Dön
+            </a>
+        </header>
+
+        <!-- Bilgilendirme ve Başlık -->
+        <section class="mb-12">
+            <div class="border-l border-white/40 pl-6 py-2 space-y-3">
+                <div class="inline-block px-2.5 py-1 border border-emerald-900/60 bg-emerald-950/40 text-[11px] font-mono tracking-wider text-emerald-400 uppercase">
+                    🎓 T.C. Öğrencilerine Özel Destek Projesi
+                </div>
+                <h1 class="text-2xl sm:text-4xl font-light leading-tight">
+                    Öğrenciler İçin Ücretsiz Web Sitesi Başvurusu
+                </h1>
+                <p class="text-zinc-400 text-xs sm:text-sm leading-relaxed max-w-2xl">
+                    NruS Creativ olarak; geleceğin yazılımcı, tasarımcı ve girişimci gençlerini destekliyoruz. Portfolyolarınızı sergilemeniz, projelerinizi duyurmanız veya kişisel sitenizi kurmanız için <strong class="text-white font-mono">nrus.com.tr/isminiz.html</strong> şeklinde ücretsiz web alanı sağlıyoruz.
+                </p>
+            </div>
+        </section>
+
+        <!-- Başvuru Form Kartı -->
+        <section class="border border-zinc-800 p-6 sm:p-10 bg-zinc-950/60 mb-16">
+            <div class="mb-8 border-b border-zinc-900 pb-4">
+                <div class="text-[11px] font-mono text-zinc-500 uppercase">// BAŞVURU FORMU</div>
+                <h2 class="text-lg font-medium text-white">Öğrenci Bilgileri & Uzantı Tercihi</h2>
+                <p class="text-xs text-zinc-400 mt-1">Lütfen bilgilerinizi eksiksiz doldurun. İnceleme sonrası WhatsApp üzerinden dönüş sağlanacaktır.</p>
+            </div>
+
+            <form onsubmit="handleStudentSubmit(event)" class="space-y-6 font-mono text-xs">
+                
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <!-- Ad Soyad -->
+                    <div>
+                        <label class="block text-zinc-400 mb-2">Ad Soyad *</label>
+                        <input type="text" id="student-name" required class="w-full px-4 py-3 bg-zinc-900/60 border border-zinc-800 text-white focus:outline-none focus:border-white transition-colors" placeholder="Adınız Soyadınız">
+                    </div>
+
+                    <!-- Telefon -->
+                    <div>
+                        <label class="block text-zinc-400 mb-2">Telefon / WhatsApp *</label>
+                        <input type="tel" id="student-phone" required class="w-full px-4 py-3 bg-zinc-900/60 border border-zinc-800 text-white focus:outline-none focus:border-white transition-colors" placeholder="05XX XXX XX XX">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <!-- Okuduğu Okul -->
+                    <div>
+                        <label class="block text-zinc-400 mb-2">Okuduğunuz Okul / Üniversite *</label>
+                        <input type="text" id="student-school" required class="w-full px-4 py-3 bg-zinc-900/60 border border-zinc-800 text-white focus:outline-none focus:border-white transition-colors" placeholder="Örn: İstanbul Üniversitesi">
+                    </div>
+
+                    <!-- Bölüm / Sınıf -->
+                    <div>
+                        <label class="block text-zinc-400 mb-2">Bölüm / Sınıf *</label>
+                        <input type="text" id="student-department" required class="w-full px-4 py-3 bg-zinc-900/60 border border-zinc-800 text-white focus:outline-none focus:border-white transition-colors" placeholder="Örn: Bilgisayar Müh. 2. Sınıf">
+                    </div>
+                </div>
+
+                <!-- İstediği Site Uzantısı -->
+                <div>
+                    <label class="block text-zinc-400 mb-2">İstediğiniz Web Sitesi Adresi / Uzantısı *</label>
+                    <div class="flex items-center">
+                        <span class="px-3 py-3 bg-zinc-900 border border-r-0 border-zinc-800 text-zinc-500 font-mono text-xs select-none">
+                            nrus.com.tr/
+                        </span>
+                        <input type="text" id="student-subpath" required class="w-full px-4 py-3 bg-zinc-900/60 border border-zinc-800 text-white focus:outline-none focus:border-white transition-colors" placeholder="ornek.html">
+                    </div>
+                    <p class="text-[10px] text-zinc-500 mt-1">Örnek: "ahmet-yilmaz.html" yazarsanız adresiniz "nrus.com.tr/ahmet-yilmaz.html" olacaktır.</p>
+                </div>
+
+                <!-- Proje / Site Amacı -->
+                <div>
+                    <label class="block text-zinc-400 mb-2">Web Sitesinin Amacı / İçeriği *</label>
+                    <textarea id="student-purpose" required rows="3" class="w-full px-4 py-3 bg-zinc-900/60 border border-zinc-800 text-white focus:outline-none focus:border-white transition-colors" placeholder="Sitenizde ne tür içerik veya projeler sergilemek istiyorsunuz?"></textarea>
+                </div>
+
+                <!-- Şart Kabulü -->
+                <div class="flex items-start gap-3 pt-2">
+                    <input type="checkbox" id="student-verify" required class="mt-0.5 border-zinc-800 bg-zinc-900 text-white focus:ring-0">
+                    <label for="student-verify" class="text-[11px] text-zinc-400 font-sans cursor-pointer">
+                        Aktif bir öğrenci olduğumu ve istenildiğinde öğrenci belgesi sunabileceğimi taahhüt ediyorum.
+                    </label>
+                </div>
+
+                <!-- Gönder Butonu -->
+                <div class="pt-4">
+                    <button type="submit" class="w-full py-4 bg-white text-black font-bold uppercase hover:bg-zinc-200 transition-colors tracking-wider text-xs">
+                        🎓 Ücretsiz Başvuruyu WhatsApp'a Gönder →
+                    </button>
+                </div>
+            </form>
+        </section>
+
+        <!-- Footer -->
+        <footer class="border-t border-zinc-800 pt-8 pb-12 flex flex-col md:flex-row justify-between items-start md:items-center text-xs text-zinc-500 gap-4">
+            <div>
+                <p class="text-zinc-300 font-medium mb-1">NruS Creativ Öğrenci Destek Projesi</p>
+                <p>Tüm hakları saklıdır. © 2026</p>
+            </div>
+            <div class="font-mono tracking-wider">
+                <span>İletişim: +90 551 090 83 82</span>
+            </div>
+        </footer>
+
+    </main>
+
+    <script>
+        function handleStudentSubmit(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('student-name').value;
+            const phone = document.getElementById('student-phone').value;
+            const school = document.getElementById('student-school').value;
+            const dept = document.getElementById('student-department').value;
+            let subpath = document.getElementById('student-subpath').value.trim();
+            const purpose = document.getElementById('student-purpose').value;
+
+            // Uzantıya .html ekleme kontrolü
+            if (!subpath.endsWith('.html')) {
+                subpath += '.html';
+            }
+
+            const fullUrl = `https://nrus.com.tr/${subpath}`;
+
+            const message = `Merhaba NruS Creativ,%0A%0A🎓 *ÜCRETSİZ ÖĞRENCİ WEB SİTESİ BAŞVURUSU*%0A%0A• *Ad Soyad:* ${encodeURIComponent(name)}%0A• *Telefon:* ${encodeURIComponent(phone)}%0A• *Okul/Üniversite:* ${encodeURIComponent(school)}%0A• *Bölüm/Sınıf:* ${encodeURIComponent(dept)}%0A• *İstenen Adres:* ${encodeURIComponent(fullUrl)}%0A• *Site Amacı:* ${encodeURIComponent(purpose)}%0A%0AÖğrenci desteği kapsamında başvurumun değerlendirilmesini rica ederim.`;
+
+            window.open(`https://wa.me/905510908382?text=${message}`, '_blank');
+        }
+    </script>
+
+</body>
+</html>
