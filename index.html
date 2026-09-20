@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NruS Creativ</title>
+    <title>NruS Creativ </title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -45,6 +45,28 @@
     </style>
 </head>
 <body class="bg-black text-white min-h-screen m-0 p-0 selection:bg-white selection:text-black">
+
+    <!-- Öğrenci Destek Üst Bildirim Bandı (Slide-down Banner) -->
+    <div id="student-banner" class="bg-zinc-950/90 border-b border-zinc-800 text-white text-xs font-mono py-3 px-4 transition-all duration-700 transform -translate-y-full opacity-0 fixed top-0 left-0 right-0 z-40 backdrop-blur-md">
+        <div class="max-w-6xl mx-auto flex items-center justify-between gap-4">
+            <div class="flex items-center gap-3 truncate">
+                <span class="px-2 py-0.5 bg-emerald-950/80 border border-emerald-800/60 text-emerald-400 text-[10px] uppercase font-bold tracking-wider shrink-0">
+                     ÖĞRENCİ DESTEK
+                </span>
+                <span class="text-zinc-300 text-[11px] sm:text-xs truncate">
+                    T.C. öğrencilerine özel <strong class="text-white">%100 ÜCRETSİZ</strong> web sitesi ve alan adı desteğimiz başladı!
+                </span>
+            </div>
+            <div class="flex items-center gap-4 shrink-0">
+                <a href="ogrenci.html" class="px-3 py-1 bg-white text-black text-[11px] font-bold uppercase hover:bg-zinc-200 transition-all">
+                    Başvur →
+                </a>
+                <button onclick="closeStudentBanner()" class="text-zinc-500 hover:text-white text-sm px-1 transition-colors" title="Kapat">
+                    ✕
+                </button>
+            </div>
+        </div>
+    </div>
 
     <!-- Açılış Splash Ekranı (2 Saniye Sonra Kaybolacak) -->
     <div id="splash-screen" class="fixed inset-0 z-50 bg-black flex items-center justify-center">
@@ -91,8 +113,8 @@
                     <a href="https://wa.me/905510908382?text=Merhaba,%20699%20TL%20web%20sitesi%20paketi%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum." target="_blank" class="px-6 py-3 border border-zinc-800 hover:border-zinc-500 text-zinc-300 text-xs font-mono transition-all">
                         WhatsApp Danışma Hattı
                     </a>
-                    <a href="https://nrus.com.tr/ogrenci.html" target="_blank" class="px-6 py-3 border border-zinc-800 hover:border-white text-zinc-300 hover:text-white text-xs font-mono uppercase transition-all">
-                         Öğrenciler İçin
+                    <a href="ogrenci.html" class="px-6 py-3 border border-zinc-800 hover:border-white text-zinc-300 hover:text-white text-xs font-mono uppercase transition-all">
+                        🎓 Öğrenciler İçin
                     </a>
                 </div>
             </div>
@@ -298,8 +320,26 @@
                     splash.classList.add('fade-out');
                     mainContent.classList.remove('opacity-0');
                 }
+
+                // Splash kaybolduktan 0.5s sonra öğrenci bildirim bandını yukarıdan indir
+                setTimeout(() => {
+                    const banner = document.getElementById('student-banner');
+                    if (banner && !sessionStorage.getItem('studentBannerDismissed')) {
+                        banner.classList.remove('-translate-y-full', 'opacity-0');
+                    }
+                }, 500);
+
             }, 2000); 
         });
+
+        // Öğrenci Bildirim Bandını Kapatma Fonksiyonu
+        function closeStudentBanner() {
+            const banner = document.getElementById('student-banner');
+            if (banner) {
+                banner.classList.add('-translate-y-full', 'opacity-0');
+                sessionStorage.setItem('studentBannerDismissed', 'true');
+            }
+        }
 
         // Proje Filtreleme Fonksiyonu
         function filterProjects(category) {
