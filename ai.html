@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="tr" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NruS - 2000+ Ücretsiz & Kayıtsız Yapay Zeka Portalı</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f4f4f5',
+                            100: '#e4e4e7',
+                            500: '#71717a',
+                            900: '#18181b',
+                            accent: '#3b82f6'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Font: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #000000;
+            color: #ffffff;
+        }
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #000000;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #27272a;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #3f3f46;
+        }
+        .glow-effect {
+            box-shadow: 0 0 35px -5px rgba(59, 130, 246, 0.2);
+        }
+        .glow-card {
+            transition: all 0.25s ease-in-out;
+        }
+        .glow-card:hover {
+            box-shadow: 0 0 25px -2px rgba(255, 255, 255, 0.12);
+            border-color: #52525b;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body class="bg-black text-white min-h-screen flex flex-col justify-between overflow-x-hidden selection:bg-zinc-800 selection:text-white">
+
+    <!-- ŞİFRE KORUMA SİSTEMİ (AUTH OVERLAY) -->
+    <div id="authOverlay" class="fixed inset-0 bg-black/95 backdrop-blur-xl z-50 flex items-center justify-center p-4 transition-all duration-500">
+        <div class="max-w-md w-full bg-zinc-950 border border-zinc-800 rounded-3xl p-8 shadow-2xl relative overflow-hidden glow-effect">
+            <div class="absolute -top-12 -left-12 w-32 h-32 bg-blue-600/20 rounded-full blur-3xl"></div>
+            <div class="absolute -bottom-12 -right-12 w-32 h-32 bg-purple-600/20 rounded-full blur-3xl"></div>
+
+            <div class="text-center mb-8 relative z-10">
+                <h1 class="text-5xl font-black tracking-widest text-white mb-2">NruS</h1>
+                <p class="text-zinc-400 text-sm font-medium">Giriş yapmak için yetkili şifreyi giriniz.</p>
+            </div>
+
+            <form id="authForm" onsubmit="handleAuth(event)" class="space-y-4 relative z-10">
+                <div>
+                    <label class="block text-xs font-semibold text-zinc-400 uppercase tracking-wider mb-2">Erişim Şifresi</label>
+                    <div class="relative">
+                        <input type="password" id="passwordInput" placeholder="Şifrenizi yazın..." 
+                            class="w-full bg-zinc-900 border border-zinc-800 rounded-xl px-4 py-3.5 text-white placeholder-zinc-600 focus:outline-none focus:border-zinc-500 focus:ring-1 focus:ring-zinc-500 transition duration-200">
+                        <i class="fa-solid fa-lock absolute right-4 top-1/2 -translate-y-1/2 text-zinc-600"></i>
+                    </div>
+                </div>
+
+                <div id="errorMessage" class="hidden text-red-400 text-xs bg-red-950/40 border border-red-900/50 rounded-xl p-3 text-center">
+                    <i class="fa-solid fa-triangle-exclamation mr-1"></i> Hatalı şifre! Lütfen tekrar deneyin.
+                </div>
+
+                <button type="submit" 
+                    class="w-full bg-white text-black hover:bg-zinc-200 font-bold py-3.5 px-4 rounded-xl transition duration-200 shadow-lg flex items-center justify-center gap-2">
+                    <span>Sisteme Giriş Yap</span>
+                    <i class="fa-solid fa-arrow-right text-sm"></i>
+                </button>
+            </form>
+            
+            <div class="mt-6 text-center text-xs text-zinc-600">
+                Güvenli Erişim &bull; NruS Authentication
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN WRAPPER -->
+    <div id="mainContent" class="flex-1 flex flex-col justify-between hidden min-h-screen">
+
+        <!-- HEADER -->
+        <header class="border-b border-zinc-900 bg-black/90 backdrop-blur-md sticky top-0 z-40">
+            <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+                <!-- Sol Üst: NruS -->
+                <div class="flex items-center gap-4">
+                    <span class="text-3xl font-black tracking-wider text-white hover:opacity-90 transition">NruS</span>
+                    <span class="bg-zinc-900 border border-zinc-800 text-zinc-400 text-xs px-3 py-1 rounded-full font-medium hidden sm:inline-flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                        2.000+ Ücretsiz AI Dizin
+                    </span>
+                </div>
+
+                <!-- Sağ Üst İşlevler -->
+                <div class="flex items-center gap-3">
+                    <div class="flex items-center gap-2 px-3.5 py-1.5 bg-emerald-950/40 border border-emerald-900/50 rounded-full text-emerald-400 text-xs font-semibold">
+                        <i class="fa-solid fa-circle-check text-[10px]"></i>
+                        Giriş Yapıldı
+                    </div>
+                    <button onclick="lockSystem()" class="text-zinc-400 hover:text-white p-2 rounded-xl hover:bg-zinc-900 transition" title="Oturumu Kapat">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- MAIN CONTENT AREA -->
+        <main class="max-w-7xl mx-auto px-6 py-10 flex-1 w-full space-y-8">
+            
+            <!-- HERO SECTION -->
+            <div class="space-y-4">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-950/50 border border-blue-800/50 text-blue-400 text-xs font-semibold">
+                    <i class="fa-solid fa-bolt"></i> Kayıtsız & Ücretsiz Yapay Zekalar
+                </div>
+                <h1 class="text-3xl sm:text-5xl font-black tracking-tight text-white leading-tight">
+                    Dünyanın En Geniş <span class="text-transparent bg-clip-text bg-gradient-to-r from-white via-zinc-400 to-zinc-600">Ücretsiz Yapay Zeka Portalı</span>
+                </h1>
+                <p class="text-zinc-400 max-w-3xl text-base sm:text-lg">
+                    Üyelik veya ücret ödemeden doğrudan kullanabileceğiniz resim, müzik, video, kod, sohbet ve üretkenlik yapay zekaları tek platformda.
+                </p>
+            </div>
+
+            <!-- SEARCH AND FILTER CONTROLS -->
+            <div class="space-y-4 bg-zinc-950 border border-zinc-900 p-4 sm:p-6 rounded-2xl shadow-xl">
+                <!-- Search Bar -->
+                <div class="relative">
+                    <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-zinc-500 text-lg"></i>
+                    <input type="text" id="searchInput" oninput="handleSearch()" placeholder="Yapay zeka adı, kategori veya özellik ara... (Örn: Görsel çiz, Kod yaz, Müzik, Kayıtsız)" 
+                        class="w-full bg-zinc-900/90 border border-zinc-800 rounded-xl pl-12 pr-4 py-3.5 text-sm text-white placeholder-zinc-500 focus:outline-none focus:border-zinc-500 focus:ring-1 focus:ring-zinc-500 transition">
+                    <button onclick="clearSearch()" id="btnClearSearch" class="hidden absolute right-4 top-1/2 -translate-y-1/2 text-zinc-500 hover:text-white text-xs bg-zinc-800 px-2 py-1 rounded-md">
+                        Temizle
+                    </button>
+                </div>
+
+                <!-- Category Filters Buttons -->
+                <div class="flex flex-wrap items-center gap-2 pt-2">
+                    <button onclick="filterCategory('all')" class="cat-btn bg-white text-black px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition">
+                        <i class="fa-solid fa-border-all mr-1.5"></i> Tümü (<span id="countAll">0</span>)
+                    </button>
+                    <button onclick="filterCategory('nologin')" class="cat-btn bg-emerald-950/60 hover:bg-emerald-900/60 text-emerald-400 border border-emerald-800/60 px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition">
+                        <i class="fa-solid fa-user-slash mr-1.5"></i> %100 Kayıtsız
+                    </button>
+                    <button onclick="filterCategory('resim')" class="cat-btn bg-zinc-900 hover:bg-zinc-800 text-zinc-300 px-4 py-2 rounded-xl text-xs sm:text-sm font-medium transition">
+                        <i class="fa-solid fa-palette mr-1.5 text-pink-400"></i> Resim & Visual
+                    </button>
+                    <button onclick="filterCategory('muzik')" class="cat-btn bg-zinc-900 hover:bg-zinc-800 text-zinc-300 px-4 py-2 rounded-xl text-xs sm:text-sm font-medium transition">
+                        <i class="fa-solid fa-music mr-1.5 text-purple-400"></i> Müzik & Ses
+                    </button>
+                    <button onclick="filterCategory('video')" class="cat-btn bg-zinc-900 hover:bg-zinc-800 text-zinc-300 px-4 py-2 rounded-xl text-xs sm:text-sm font-medium transition">
+                        <i class="fa-solid fa-video mr-1.5 text-blue-400"></i> Video & Animasyon
+                    </button>
+                    <button onclick="filterCategory('kod')" class="cat-btn bg-zinc-900 hover:bg-zinc-800 text-zinc-300 px-4 py-2 rounded-xl text-xs sm:text-sm font-medium transition">
+                        <i class="fa-solid fa-code mr-1.5 text-emerald-400"></i> Kod & Yazılım
+                    </button>
+                    <button onclick="filterCategory('chat')" class="cat-btn bg-zinc-900 hover:bg-zinc-800 text-zinc-300 px-4 py-2 rounded-xl text-xs sm:text-sm font-medium transition">
+                        <i class="fa-solid fa-comments mr-1.5 text-amber-400"></i> Sohbet & Asistan
+                    </button>
+                    <button onclick="filterCategory('live-studio')" class="cat-btn bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold px-4 py-2 rounded-xl text-xs sm:text-sm transition ml-auto shadow-lg">
+                        <i class="fa-solid fa-wand-magic-sparkles mr-1.5"></i> Canlı NruS AI Stüdyosu
+                    </button>
+                </div>
+            </div>
+
+            <!-- AI TOOLS GRID DIRECTORY -->
+            <div>
+                <div id="aiGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                    <!-- Cards populated dynamically via JavaScript -->
+                </div>
+
+                <!-- Load More Button -->
+                <div id="loadMoreContainer" class="mt-8 text-center">
+                    <button onclick="loadMoreTools()" id="btnLoadMore" class="bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-zinc-300 hover:text-white font-semibold px-8 py-3.5 rounded-xl text-sm transition inline-flex items-center gap-2">
+                        <span>Daha Fazla Yapay Zeka Yükle</span>
+                        <i class="fa-solid fa-chevron-down text-xs"></i>
+                    </button>
+                </div>
+
+                <!-- Empty Search Result State -->
+                <div id="emptyResult" class="hidden text-center py-16 bg-zinc-950 border border-zinc-900 rounded-2xl">
+                    <i class="fa-solid fa-robot text-4xl text-zinc-600 mb-3"></i>
+                    <h3 class="text-lg font-bold text-white mb-1">Aramanıza Uygun Yapay Zeka Bulunamadı</h3>
+                    <p class="text-zinc-500 text-sm mb-4">Lütfen farklı anahtar kelimelerle arama yapmayı veya filtreyi değiştirmeyi deneyin.</p>
+                    <button onclick="resetFilters()" class="bg-white text-black font-semibold text-xs px-4 py-2 rounded-lg">Filtreleri Sıfırla</button>
+                </div>
+            </div>
+
+            <!-- LIVE NruS AI STUDIO SECTION (EMBEDDED AI GENERATORS) -->
+            <div id="liveStudioSection" class="hidden space-y-6 bg-zinc-950 border border-zinc-800 rounded-3xl p-6 sm:p-8">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-zinc-900 pb-6">
+                    <div>
+                        <h2 class="text-2xl font-bold text-white flex items-center gap-3">
+                            <i class="fa-solid fa-sparkles text-blue-500"></i>
+                            NruS Canlı Yapay Zeka Stüdyosu
+                        </h2>
+                        <p class="text-zinc-400 text-sm mt-1">Siteden ayrılmadan doğrudan Gemini AI altyapısıyla işlem yapın.</p>
+                    </div>
+                    
+                    <!-- Sub-tabs -->
+                    <div class="flex items-center gap-2 bg-zinc-900 p-1.5 rounded-xl border border-zinc-800">
+                        <button onclick="switchStudioTab('img')" id="btn-studio-img" class="px-3.5 py-2 rounded-lg text-xs font-semibold bg-zinc-800 text-white transition">Görsel Üretici</button>
+                        <button onclick="switchStudioTab('code')" id="btn-studio-code" class="px-3.5 py-2 rounded-lg text-xs font-semibold text-zinc-400 hover:text-white transition">Kod Yazıcı</button>
+                        <button onclick="switchStudioTab('tts')" id="btn-studio-tts" class="px-3.5 py-2 rounded-lg text-xs font-semibold text-zinc-400 hover:text-white transition">Ses Okuyucu</button>
+                    </div>
+                </div>
+
+                <!-- Studio Tab 1: Image Generator -->
+                <div id="studio-tab-img" class="space-y-4">
+                    <label class="block text-sm font-medium text-zinc-300">Resim Komutu (Prompt)</label>
+                    <div class="flex gap-2">
+                        <input type="text" id="imgPrompt" placeholder="Örn: Futuristic cyberpunk city with neon lights, ultra realistic 8k" 
+                            class="flex-1 bg-zinc-900 border border-zinc-800 rounded-xl px-4 py-3 text-sm text-white placeholder-zinc-600 focus:outline-none focus:border-zinc-500">
+                        <button onclick="generateImage()" id="btnGenerateImg" class="bg-blue-600 hover:bg-blue-500 text-white font-semibold px-6 py-3 rounded-xl text-sm transition flex items-center gap-2 whitespace-nowrap">
+                            <i class="fa-solid fa-wand-magic-sparkles"></i>
+                            <span>Oluştur</span>
+                        </button>
+                    </div>
+
+                    <div id="imgResultContainer" class="min-h-[300px] bg-black border border-zinc-900 rounded-2xl flex items-center justify-center p-4 relative overflow-hidden">
+                        <span id="imgPlaceholder" class="text-zinc-600 text-sm flex flex-col items-center gap-2">
+                            <i class="fa-regular fa-image text-3xl"></i>
+                            Oluşturulan resim burada görünecektir.
+                        </span>
+                        <div id="imgLoader" class="hidden flex-col items-center gap-3">
+                            <i class="fa-solid fa-spinner fa-spin text-3xl text-blue-500"></i>
+                            <span class="text-xs text-zinc-400 animate-pulse">Resim yapay zeka tarafından çiziliyor...</span>
+                        </div>
+                        <img id="imgOutput" class="hidden max-h-[500px] w-auto rounded-lg object-contain shadow-2xl" alt="AI Generated">
+                    </div>
+                </div>
+
+                <!-- Studio Tab 2: Code Generator -->
+                <div id="studio-tab-code" class="hidden space-y-4">
+                    <label class="block text-sm font-medium text-zinc-300">Yazılacak Kod veya Soru</label>
+                    <div class="flex gap-2">
+                        <input type="text" id="codePrompt" placeholder="Örn: HTML ve Tailwind CSS ile modern bir iletişim formu yaz" 
+                            class="flex-1 bg-zinc-900 border border-zinc-800 rounded-xl px-4 py-3 text-sm text-white placeholder-zinc-600 focus:outline-none focus:border-zinc-500">
+                        <button onclick="generateCode()" id="btnGenerateCode" class="bg-emerald-600 hover:bg-emerald-500 text-white font-semibold px-6 py-3 rounded-xl text-sm transition flex items-center gap-2 whitespace-nowrap">
+                            <i class="fa-solid fa-code"></i>
+                            <span>Kod Üret</span>
+                        </button>
+                    </div>
+
+                    <div id="codeResultContainer" class="bg-black border border-zinc-900 rounded-2xl p-4 min-h-[250px] relative font-mono text-xs overflow-x-auto">
+                        <pre id="codeOutput" class="text-zinc-300 whitespace-pre-wrap">Kod çıktısı burada görünecektir...</pre>
+                    </div>
+                </div>
+
+                <!-- Studio Tab 3: TTS / Audio -->
+                <div id="studio-tab-tts" class="hidden space-y-4">
+                    <label class="block text-sm font-medium text-zinc-300">Seslendirilecek Metin</label>
+                    <div class="flex gap-2">
+                        <input type="text" id="ttsPrompt" placeholder="Örn: NruS yapay zeka portalına hoş geldiniz." 
+                            class="flex-1 bg-zinc-900 border border-zinc-800 rounded-xl px-4 py-3 text-sm text-white placeholder-zinc-600 focus:outline-none focus:border-zinc-500">
+                        <button onclick="generateTTS()" id="btnGenerateTTS" class="bg-purple-600 hover:bg-purple-500 text-white font-semibold px-6 py-3 rounded-xl text-sm transition flex items-center gap-2 whitespace-nowrap">
+                            <i class="fa-solid fa-volume-high"></i>
+                            <span>Seslendir</span>
+                        </button>
+                    </div>
+
+                    <div id="ttsPlayerContainer" class="p-6 bg-black border border-zinc-900 rounded-2xl flex flex-col items-center justify-center gap-4">
+                        <div id="ttsStatus" class="text-xs text-zinc-500">Sese dönüştürmek için metin girip buton basınız.</div>
+                        <audio id="audioPlayer" controls class="hidden w-full max-w-md"></audio>
+                    </div>
+                </div>
+
+            </div>
+
+        </main>
+
+        <!-- FOOTER -->
+        <footer class="border-t border-zinc-900 bg-black py-8 mt-12">
+            <div class="max-w-7xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div class="text-sm font-bold text-white tracking-wider">
+                    NruS
+                </div>
+                
+                <!-- BÜTÜN HAKLARI SAKLIDIR YAZISI -->
+                <div class="text-zinc-500 text-xs text-center font-medium">
+                    Bütün Hakları Saklıdır. &copy; 2026 NruS.
+                </div>
+
+                <div class="flex items-center gap-4 text-zinc-500 text-xs">
+                    <span class="hover:text-zinc-300 cursor-pointer">Gizlilik Politikası</span>
+                    <span>&bull;</span>
+                    <span class="hover:text-zinc-300 cursor-pointer">Kullanım Şartları</span>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+
+    <script>
+        /* AUTHENTICATION LOGIC */
+        const CORRECT_PASS = "1515";
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const isAuth = sessionStorage.getItem('nrus_authenticated');
+            if (isAuth === 'true') {
+                unlockUI();
+            }
+            initAIDirectory();
+        });
+
+        function handleAuth(e) {
+            e.preventDefault();
+            const input = document.getElementById('passwordInput').value.trim();
+            const errorEl = document.getElementById('errorMessage');
+
+            if (input === CORRECT_PASS) {
+                sessionStorage.setItem('nrus_authenticated', 'true');
+                errorEl.classList.add('hidden');
+                unlockUI();
+            } else {
+                errorEl.classList.remove('hidden');
+                document.getElementById('passwordInput').value = '';
+                document.getElementById('passwordInput').focus();
+            }
+        }
+
+        function unlockUI() {
+            const overlay = document.getElementById('authOverlay');
+            const main = document.getElementById('mainContent');
+            
+            overlay.classList.add('opacity-0', 'pointer-events-none');
+            setTimeout(() => {
+                overlay.style.display = 'none';
+                main.classList.remove('hidden');
+            }, 500);
+        }
+
+        function lockSystem() {
+            sessionStorage.removeItem('nrus_authenticated');
+            location.reload();
+        }
+
+        /* AI TOOLS COMPREHENSIVE DATABASE */
+        const ALL_AI_TOOLS = [
+            // RESİM & GÖRSEL
+            {
+                name: "Pollinations.ai",
+                category: "resim",
+                isNoLogin: true,
+                badge: "Kayıtsız & Sınırsız",
+                desc: "Herhangi bir hesap açmadan sadece metin girerek anında yüksek kaliteli resimler üretin.",
+                url: "https://pollinations.ai/",
+                icon: "fa-solid fa-palette",
+                color: "pink"
+            },
+            {
+                name: "Craiyon (DALL-E Mini)",
+                category: "resim",
+                isNoLogin: true,
+                badge: "Kayıtsız & Ücretsiz",
+                desc: "Metin komutlarınızdan sınırsız illüstrasyon ve resim tasarlayan tamamen ücretsiz platform.",
+                url: "https://www.craiyon.com/",
+                icon: "fa-solid fa-wand-magic-sparkles",
+                color: "pink"
+            },
+            {
+                name: "Lexica Art",
+                category: "resim",
+                isNoLogin: true,
+                badge: "Kayıtsız Arama & Ücretsiz",
+                desc: "Stable Diffusion tabanlı milyonlarca AI görselini arayın, benzerlerini anında oluşturun.",
+                url: "https://lexica.art/",
+                icon: "fa-solid fa-image",
+                color: "pink"
+            },
+            {
+                name: "Hugging Face FLUX.1",
+                category: "resim",
+                isNoLogin: true,
+                badge: "Kayıtsız Ultra Kalite",
+                desc: "Dünyanın en gelişmiş açık kaynaklı fotogerçekçi resim oluşturma modeli FLUX.1.",
+                url: "https://huggingface.co/spaces/black-forest-labs/FLUX.1-schnell",
+                icon: "fa-solid fa-camera-retro",
+                color: "pink"
+            },
+            {
+                name: "Clipdrop Free AI Tools",
+                category: "resim",
+                isNoLogin: true,
+                badge: "Kayıtsız Hızlı Araçlar",
+                desc: "Arka plan silme, resim büyütme ve ışıklandırma gibi profesyonel görsel düzenleyiciler.",
+                url: "https://clipdrop.co/",
+                icon: "fa-solid fa-crop-simple",
+                color: "pink"
+            },
+            {
+                name: "Civitai Model Hub",
+                category: "resim",
+                isNoLogin: true,
+                badge: "Açık Kaynak Görsel",
+                desc: "Yapay zeka resim modelleri ve hazır görseller için dünyanın en büyük ücretsiz deposu.",
+                url: "https://civitai.com/",
+                icon: "fa-solid fa-box-open",
+                color: "pink"
+            },
+
+            // SOHBET & ASİSTAN
+            {
+                name: "DuckDuckGo AI Chat",
+                category: "chat",
+                isNoLogin: true,
+                badge: "Kayıtsız & Gizli Chat",
+                desc: "Üyelik gerektirmeden GPT-4o mini, Claude 3 Haiku ve Llama 3 modelleriyle tamamen anonim sohbet edin.",
+                url: "https://duckduckgo.com/chat",
+                icon: "fa-solid fa-comments",
+                color: "amber"
+            },
+            {
+                name: "Perplexity AI Free",
+                category: "chat",
+                isNoLogin: true,
+                badge: "Kayıtsız Arama Motoru",
+                desc: "İnternet kaynaklarını canlı tarayarak dipnotlu ve doğrudan doğru cevaplar sunan yapay zeka arama motoru.",
+                url: "https://www.perplexity.ai/",
+                icon: "fa-solid fa-magnifying-glass",
+                color: "amber"
+            },
+            {
+                name: "HuggingChat",
+                category: "chat",
+                isNoLogin: true,
+                badge: "Açık Kaynak & Kayıtsız",
+                desc: "Llama 3, Mixtral ve Command R+ modellerini hiçbir hesap açmadan doğrudan kullanın.",
+                url: "https://huggingface.co/chat/",
+                icon: "fa-solid fa-robot",
+                color: "amber"
+            },
+            {
+                name: "Pi.ai Personal AI",
+                category: "chat",
+                isNoLogin: false,
+                badge: "Ücretsiz İnsan Gibi AI",
+                desc: "Son derece empatik, doğal ve sesli yanıt verebilen kişisel yapay zeka asistanı.",
+                url: "https://pi.ai/",
+                icon: "fa-solid fa-face-smile",
+                color: "amber"
+            },
+
+            // KOD & YAZILIM
+            {
+                name: "Phind Search & Code",
+                category: "kod",
+                isNoLogin: true,
+                badge: "Kayıtsız & Ücretsiz",
+                desc: "Yazılımcılar için özel eğitilmiş, anında kod çözümleri ve hata ayıklama sunan arama motoru.",
+                url: "https://www.phind.com/",
+                icon: "fa-solid fa-code",
+                color: "emerald"
+            },
+            {
+                name: "Blackbox AI Code",
+                category: "kod",
+                isNoLogin: true,
+                badge: "Kayıtsız Hızlı Kod",
+                desc: "Yazmak istediğiniz fonksiyonu tarif edin, saniyeler içinde çalışan kodu üretsin.",
+                url: "https://www.blackbox.ai/",
+                icon: "fa-solid fa-terminal",
+                color: "emerald"
+            },
+            {
+                name: "v0.dev by Vercel",
+                category: "kod",
+                isNoLogin: false,
+                badge: "Ücretsiz Arayüz Kodu",
+                desc: "Yazılı komutlarınızdan anında modern React, Tailwind CSS ve Next.js arayüzleri oluşturur.",
+                url: "https://v0.dev/",
+                icon: "fa-solid fa-laptop-code",
+                color: "emerald"
+            },
+            {
+                name: "Bolt.new AI Studio",
+                category: "kod",
+                isNoLogin: false,
+                badge: "Ücretsiz Fullstack Web",
+                desc: "Tarayıcı üzerinde tam kapsamlı full-stack web uygulamalarını yapay zekaya tek tıkla yazdırın.",
+                url: "https://bolt.new/",
+                icon: "fa-solid fa-cubes-stacked",
+                color: "emerald"
+            },
+
+            // MÜZİK & SES
+            {
+                name: "Riffusion Music AI",
+                category: "muzik",
+                isNoLogin: true,
+                badge: "Kayıtsız & Anlık Müzik",
+                desc: "Yazdığınız tarza ve komuta göre anında melodi, ritim ve şarkı parçaları oluşturan yapay zeka.",
+                url: "https://www.riffusion.com/",
+                icon: "fa-solid fa-music",
+                color: "purple"
+            },
+            {
+                name: "Suno AI Music",
+                category: "muzik",
+                isNoLogin: false,
+                badge: "Günlük Ücretsiz Kredi",
+                desc: "Türkçe ve tüm dillerde sözel şarkılar, vokaller ve tam uzunlukta parçalar üreten lider müzik AI.",
+                url: "https://suno.com/",
+                icon: "fa-solid fa-compact-disc",
+                color: "purple"
+            },
+            {
+                name: "Udio AI Studio",
+                category: "muzik",
+                isNoLogin: false,
+                badge: "Ücretsiz Stüdyo Kalitesi",
+                desc: "Kristal netliğinde vokal ve stüdyo kalitesinde enstrümantal müzikler üreten güçlü yapay zeka.",
+                url: "https://www.udio.com/",
+                icon: "fa-solid fa-sliders",
+                color: "purple"
+            },
+            {
+                name: "MusicGen (Meta AI Space)",
+                category: "muzik",
+                isNoLogin: true,
+                badge: "Kayıtsız & Açık Kaynak",
+                desc: "Meta tarafından geliştirilen ve metin komutlarından enstrümantal müzik üreten açık kaynak model.",
+                url: "https://huggingface.co/spaces/facebook/MusicGen",
+                icon: "fa-solid fa-guitar",
+                color: "purple"
+            },
+
+            // VİDEO & ANİMASYON
+            {
+                name: "Haiper AI Video",
+                category: "video",
+                isNoLogin: false,
+                badge: "Ücretsiz Deneme",
+                desc: "Metin tanımlarından ve resimlerden yüksek kaliteli HD videolar üreten yapay zeka.",
+                url: "https://haiper.ai/",
+                icon: "fa-solid fa-video",
+                color: "blue"
+            },
+            {
+                name: "Kling AI Video",
+                category: "video",
+                isNoLogin: false,
+                badge: "Ücretsiz Günlük Kredi",
+                desc: "Sinematik kalitede gerçekçi hareketlere sahip videolar üreten gelişmiş yapay zeka modeli.",
+                url: "https://klingai.com/",
+                icon: "fa-solid fa-clapperboard",
+                color: "blue"
+            },
+            {
+                name: "Luma Dream Machine",
+                category: "video",
+                isNoLogin: false,
+                badge: "Ücretsiz Deneme",
+                desc: "Fizik motoruna uygun ultra gerçekçi 3D ve sinematik video sahneleri üreten platform.",
+                url: "https://lumalabs.ai/dream-machine",
+                icon: "fa-solid fa-film",
+                color: "blue"
+            },
+            {
+                name: "Viggle AI",
+                category: "video",
+                isNoLogin: true,
+                badge: "Kayıtsız Dans & Animasyon",
+                desc: "Karakterlerinize istediğiniz hareketleri ve dansları yaptırabilen eğlenceli video aracı.",
+                url: "https://viggle.ai/",
+                icon: "fa-solid fa-person-running",
+                color: "blue"
+            },
+
+            // ÇOKLU & DİĞER
+            {
+                name: "Hugging Face Spaces",
+                category: "all",
+                isNoLogin: true,
+                badge: "2.000+ Açık Kaynak AI",
+                desc: "Dünyanın en büyük yapay zeka deposu. Binlerce resim, video, ses ve metin modelini ücretsiz deneyin.",
+                url: "https://huggingface.co/spaces",
+                icon: "fa-solid fa-cubes",
+                color: "amber"
+            }
+        ];
+
+        /* DYNAMIC DIRECTORY LOGIC */
+        let currentCategory = 'all';
+        let itemsToShow = 12;
+
+        function initAIDirectory() {
+            document.getElementById('countAll').textContent = ALL_AI_TOOLS.length;
+            renderGrid();
+        }
+
+        function renderGrid() {
+            const grid = document.getElementById('aiGrid');
+            const searchQuery = document.getElementById('searchInput').value.toLowerCase().trim();
+            const emptyResult = document.getElementById('emptyResult');
+            const loadMoreBtn = document.getElementById('btnLoadMore');
+
+            grid.innerHTML = '';
+
+            let filtered = ALL_AI_TOOLS.filter(tool => {
+                const matchCategory = 
+                    currentCategory === 'all' ? true :
+                    currentCategory === 'nologin' ? tool.isNoLogin :
+                    tool.category === currentCategory;
+
+                const matchSearch = searchQuery === '' || 
+                    tool.name.toLowerCase().includes(searchQuery) || 
+                    tool.desc.toLowerCase().includes(searchQuery) ||
+                    tool.badge.toLowerCase().includes(searchQuery);
+
+                return matchCategory && matchSearch;
+            });
+
+            if (filtered.length === 0) {
+                emptyResult.classList.remove('hidden');
+                document.getElementById('loadMoreContainer').classList.add('hidden');
+                return;
+            } else {
+                emptyResult.classList.add('hidden');
+            }
+
+            const visibleItems = filtered.slice(0, itemsToShow);
+
+            visibleItems.forEach(tool => {
+                const badgeBg = tool.isNoLogin ? 'bg-emerald-950 text-emerald-400 border-emerald-800' : 'bg-zinc-900 text-zinc-300 border-zinc-800';
+                const iconColor = tool.color === 'pink' ? 'text-pink-400 bg-pink-950/40 border-pink-900/40' :
+                                  tool.color === 'emerald' ? 'text-emerald-400 bg-emerald-950/40 border-emerald-900/40' :
+                                  tool.color === 'purple' ? 'text-purple-400 bg-purple-950/40 border-purple-900/40' :
+                                  tool.color === 'blue' ? 'text-blue-400 bg-blue-950/40 border-blue-900/40' :
+                                  'text-amber-400 bg-amber-950/40 border-amber-900/40';
+
+                const cardHTML = `
+                    <div class="ai-card bg-zinc-950 border border-zinc-900 rounded-2xl p-6 flex flex-col justify-between glow-card">
+                        <div>
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="p-3 ${iconColor} rounded-xl border"><i class="${tool.icon} text-xl"></i></span>
+                                <span class="text-[10px] font-bold uppercase tracking-wider ${badgeBg} border px-2.5 py-1 rounded-md">${tool.badge}</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-white mb-2">${tool.name}</h3>
+                            <p class="text-zinc-400 text-xs sm:text-sm mb-4 leading-relaxed">${tool.desc}</p>
+                        </div>
+                        <a href="${tool.url}" target="_blank" rel="noopener" class="w-full bg-zinc-900 hover:bg-zinc-800 text-white font-semibold py-2.5 px-4 rounded-xl text-xs sm:text-sm text-center border border-zinc-800 transition flex items-center justify-center gap-2">
+                            <span>Araca Git</span>
+                            <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+                        </a>
+                    </div>
+                `;
+                grid.innerHTML += cardHTML;
+            });
+
+            if (filtered.length > itemsToShow) {
+                document.getElementById('loadMoreContainer').classList.remove('hidden');
+            } else {
+                document.getElementById('loadMoreContainer').classList.add('hidden');
+            }
+        }
+
+        function loadMoreTools() {
+            itemsToShow += 12;
+            renderGrid();
+        }
+
+        function handleSearch() {
+            const query = document.getElementById('searchInput').value;
+            const clearBtn = document.getElementById('btnClearSearch');
+            if (query.trim().length > 0) {
+                clearBtn.classList.remove('hidden');
+            } else {
+                clearBtn.classList.add('hidden');
+            }
+            itemsToShow = 12;
+            renderGrid();
+        }
+
+        function clearSearch() {
+            document.getElementById('searchInput').value = '';
+            document.getElementById('btnClearSearch').classList.add('hidden');
+            itemsToShow = 12;
+            renderGrid();
+        }
+
+        function filterCategory(cat) {
+            currentCategory = cat;
+            itemsToShow = 12;
+
+            const grid = document.getElementById('aiGrid');
+            const studio = document.getElementById('liveStudioSection');
+            const btns = document.querySelectorAll('.cat-btn');
+
+            btns.forEach(btn => {
+                btn.classList.remove('bg-white', 'text-black');
+                btn.classList.add('bg-zinc-900', 'text-zinc-300');
+            });
+            event.currentTarget.classList.remove('bg-zinc-900', 'text-zinc-300');
+            event.currentTarget.classList.add('bg-white', 'text-black');
+
+            if (cat === 'live-studio') {
+                grid.classList.add('hidden');
+                document.getElementById('loadMoreContainer').classList.add('hidden');
+                studio.classList.remove('hidden');
+            } else {
+                grid.classList.remove('hidden');
+                studio.classList.add('hidden');
+                renderGrid();
+            }
+        }
+
+        function resetFilters() {
+            document.getElementById('searchInput').value = '';
+            currentCategory = 'all';
+            itemsToShow = 12;
+            renderGrid();
+        }
+
+        /* LIVE NruS AI STUDIO LOGIC */
+        function switchStudioTab(tab) {
+            document.getElementById('studio-tab-img').classList.add('hidden');
+            document.getElementById('studio-tab-code').classList.add('hidden');
+            document.getElementById('studio-tab-tts').classList.add('hidden');
+
+            document.getElementById('btn-studio-img').className = "px-3.5 py-2 rounded-lg text-xs font-semibold text-zinc-400 hover:text-white transition";
+            document.getElementById('btn-studio-code').className = "px-3.5 py-2 rounded-lg text-xs font-semibold text-zinc-400 hover:text-white transition";
+            document.getElementById('btn-studio-tts').className = "px-3.5 py-2 rounded-lg text-xs font-semibold text-zinc-400 hover:text-white transition";
+
+            if (tab === 'img') {
+                document.getElementById('studio-tab-img').classList.remove('hidden');
+                document.getElementById('btn-studio-img').className = "px-3.5 py-2 rounded-lg text-xs font-semibold bg-zinc-800 text-white transition";
+            } else if (tab === 'code') {
+                document.getElementById('studio-tab-code').classList.remove('hidden');
+                document.getElementById('btn-studio-code').className = "px-3.5 py-2 rounded-lg text-xs font-semibold bg-zinc-800 text-white transition";
+            } else if (tab === 'tts') {
+                document.getElementById('studio-tab-tts').classList.remove('hidden');
+                document.getElementById('btn-studio-tts').className = "px-3.5 py-2 rounded-lg text-xs font-semibold bg-zinc-800 text-white transition";
+            }
+        }
+
+        // 1. GEMINI LIVE IMAGE GENERATION
+        async function generateImage() {
+            const prompt = document.getElementById('imgPrompt').value.trim();
+            if (!prompt) return;
+
+            const loader = document.getElementById('imgLoader');
+            const placeholder = document.getElementById('imgPlaceholder');
+            const outputImg = document.getElementById('imgOutput');
+            const btn = document.getElementById('btnGenerateImg');
+
+            loader.classList.remove('hidden');
+            loader.classList.add('flex');
+            placeholder.classList.add('hidden');
+            outputImg.classList.add('hidden');
+            btn.disabled = true;
+
+            try {
+                const apiKey = "";
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-image:generateContent?key=${apiKey}`;
+                
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        contents: [{ parts: [{ text: prompt }] }],
+                        generationConfig: {
+                            responseModalities: ['IMAGE'],
+                            imageConfig: { aspectRatio: "1:1" }
+                        }
+                    })
+                });
+
+                const result = await response.json();
+                const base64Data = result?.candidates?.[0]?.content?.parts?.find(p => p.inlineData)?.inlineData?.data;
+
+                if (base64Data) {
+                    outputImg.src = `data:image/png;base64,${base64Data}`;
+                    outputImg.classList.remove('hidden');
+                } else {
+                    alert('Görsel üretilemedi. Lütfen farklı bir prompt deneyiniz.');
+                    placeholder.classList.remove('hidden');
+                }
+            } catch (err) {
+                console.error(err);
+                alert('Hata oluştu! Lütfen tekrar deneyiniz.');
+                placeholder.classList.remove('hidden');
+            } finally {
+                loader.classList.add('hidden');
+                loader.classList.remove('flex');
+                btn.disabled = false;
+            }
+        }
+
+        // 2. GEMINI LIVE CODE GENERATION
+        async function generateCode() {
+            const prompt = document.getElementById('codePrompt').value.trim();
+            if (!prompt) return;
+
+            const output = document.getElementById('codeOutput');
+            const btn = document.getElementById('btnGenerateCode');
+
+            output.textContent = "Kod oluşturuluyor, lütfen bekleyiniz...";
+            btn.disabled = true;
+
+            try {
+                const apiKey = "";
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`;
+
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        contents: [{ parts: [{ text: `Yazılımcı gibi davran ve şu isteğe uygun tam kodu yaz: ${prompt}` }] }]
+                    })
+                });
+
+                const result = await response.json();
+                const text = result?.candidates?.[0]?.content?.parts?.[0]?.text;
+
+                if (text) {
+                    output.textContent = text;
+                } else {
+                    output.textContent = "Kod üretilemedi.";
+                }
+            } catch (err) {
+                console.error(err);
+                output.textContent = "Hata oluştu. Lütfen tekrar deneyin.";
+            } finally {
+                btn.disabled = false;
+            }
+        }
+
+        // 3. GEMINI LIVE TTS AUDIO GENERATION
+        async function generateTTS() {
+            const prompt = document.getElementById('ttsPrompt').value.trim();
+            if (!prompt) return;
+
+            const status = document.getElementById('ttsStatus');
+            const player = document.getElementById('audioPlayer');
+            const btn = document.getElementById('btnGenerateTTS');
+
+            status.textContent = "Ses oluşturuluyor...";
+            player.classList.add('hidden');
+            btn.disabled = true;
+
+            try {
+                const apiKey = "";
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-tts:generateContent?key=${apiKey}`;
+
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        contents: [{ parts: [{ text: `Say clearly in Turkish: ${prompt}` }] }],
+                        generationConfig: {
+                            responseModalities: ["AUDIO"],
+                            speechConfig: {
+                                voiceConfig: { prebuiltVoiceConfig: { voiceName: "Puck" } }
+                            }
+                        }
+                    })
+                });
+
+                const result = await response.json();
+                const part = result?.candidates?.[0]?.content?.parts?.[0];
+                const audioData = part?.inlineData?.data;
+                const mimeType = part?.inlineData?.mimeType;
+
+                if (audioData && mimeType) {
+                    const sampleRateMatch = mimeType.match(/rate=(\d+)/);
+                    const sampleRate = sampleRateMatch ? parseInt(sampleRateMatch[1], 10) : 24000;
+                    
+                    const pcmBuffer = base64ToArrayBuffer(audioData);
+                    const pcm16 = new Int16Array(pcmBuffer);
+                    const wavBlob = pcmToWav(pcm16, sampleRate);
+                    
+                    const audioUrl = URL.createObjectURL(wavBlob);
+                    player.src = audioUrl;
+                    player.classList.remove('hidden');
+                    status.textContent = "Ses başarıyla üretildi!";
+                    player.play();
+                } else {
+                    status.textContent = "Ses üretilemedi.";
+                }
+            } catch (err) {
+                console.error(err);
+                status.textContent = "Hata oluştu.";
+            } finally {
+                btn.disabled = false;
+            }
+        }
+
+        /* PCM TO WAV UTILITY HELPERS */
+        function base64ToArrayBuffer(base64) {
+            const binaryString = atob(base64);
+            const bytes = new Uint8Array(binaryString.length);
+            for (let i = 0; i < binaryString.length; i++) {
+                bytes[i] = binaryString.charCodeAt(i);
+            }
+            return bytes.buffer;
+        }
+
+        function pcmToWav(pcm16, sampleRate) {
+            const numChannels = 1;
+            const byteRate = sampleRate * numChannels * 2;
+            const blockAlign = numChannels * 2;
+            const dataSize = pcm16.length * 2;
+            const buffer = new ArrayBuffer(44 + dataSize);
+            const view = new DataView(buffer);
+
+            writeString(view, 0, 'RIFF');
+            view.setUint32(4, 36 + dataSize, true);
+            writeString(view, 8, 'WAVE');
+            writeString(view, 12, 'fmt ');
+            view.setUint32(16, 16, true);
+            view.setUint16(20, 1, true);
+            view.setUint16(22, numChannels, true);
+            view.setUint32(24, sampleRate, true);
+            view.setUint32(28, byteRate, true);
+            view.setUint16(32, blockAlign, true);
+            view.setUint16(34, 16, true);
+            writeString(view, 36, 'data');
+            view.setUint32(40, dataSize, true);
+
+            let offset = 44;
+            for (let i = 0; i < pcm16.length; i++, offset += 2) {
+                view.setInt16(offset, pcm16[i], true);
+            }
+
+            return new Blob([buffer], { type: 'audio/wav' });
+        }
+
+        function writeString(view, offset, string) {
+            for (let i = 0; i < string.length; i++) {
+                view.setUint8(offset + i, string.charCodeAt(i));
+            }
+        }
+    </script>
+</body>
+</html>
